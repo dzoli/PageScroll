@@ -16,7 +16,7 @@ import org.androidannotations.annotations.ViewById;
 
 
 @EViewGroup(R.layout.item_view_data)
-public class DataItemView  extends RelativeLayout {
+public class DataItemView  extends LinearLayout {
 
     @ViewById
     TextView name;

@@ -3,15 +3,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<TextView-->
-        <!--android:id="@+id/pageText"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="40dp"-->
-        <!--android:gravity="center"-->
-        <!--android:lineSpacingExtra="4sp"-->
-        <!--android:text="@string/page"-->
-        <!--android:textColor="@color/pageLabelGrey"-->
-        <!--android:textSize="12sp" />-->
+    <TextView
+        android:id="@+id/page"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:lineSpacingExtra="4sp"
+        android:text="@string/page"
+        android:textSize="12sp"
+        android:layout_marginRight="@dimen/x_medium_margin"/>
+
+    <TextView
+        android:id="@+id/currentPage"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:lineSpacingExtra="4sp"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/slash"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:lineSpacingExtra="4sp"
+        android:text="@string/slash"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/maxPages"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:lineSpacingExtra="4sp"
+        android:textSize="12sp"
+        android:layout_marginRight="@dimen/x_big"/>
+
+    <TextView
+        android:id="@+id/skipPage"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:lineSpacingExtra="4sp"
+        android:text="@string/page_skip"
+        android:textSize="12sp" />
+
+    <EditText
+        android:id="@+id/skipToPage"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content" />
 
     <!--<ch.ringler.drtaxpocket.view.PageScrollView-->
         <!--android:id="@+id/pageNumberScroller"-->
@@ -28,13 +68,5 @@
         <!--android:requiresFadingEdge="vertical"-->
         <!--android:scrollbars="none"-->
         <!--android:showDividers="none" />-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/pageLabel"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="40dp"-->
-        <!--android:gravity="center"-->
-        <!--android:textColor="@color/pageLabelGrey"-->
-        <!--android:textSize="12sp" />-->
 
 </LinearLayout>
