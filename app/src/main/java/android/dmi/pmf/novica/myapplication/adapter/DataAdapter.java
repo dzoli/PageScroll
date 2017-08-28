@@ -5,6 +5,8 @@ import android.dmi.pmf.novica.myapplication.dao.Repository;
 import android.dmi.pmf.novica.myapplication.model.DataItem;
 import android.dmi.pmf.novica.myapplication.view.DataItemView;
 import android.dmi.pmf.novica.myapplication.view.DataItemView_;
+import android.dmi.pmf.novica.myapplication.view.NumberItemView;
+import android.dmi.pmf.novica.myapplication.view.NumberItemView_;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -26,7 +28,7 @@ import java.util.List;
 @EBean
 public class DataAdapter extends BaseAdapter {
 
-    private List<DataItem> dataItems = new ArrayList<>();
+    private List<Integer> dataItems = new ArrayList<>();
 
     @RootContext
     Context context;
@@ -38,7 +40,6 @@ public class DataAdapter extends BaseAdapter {
     void inti() {
         setDataItems(repositoryBean.getAllItems());
     }
-
 
     @Override
     public int getCount() {
@@ -58,21 +59,22 @@ public class DataAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        final DataItemView dataItemView;
+        final NumberItemView numberItemView;
         if (convertView == null) {
-            dataItemView = DataItemView_.build(context);
+            numberItemView = NumberItemView_.build(context);
         }else{
-            dataItemView = (DataItemView) convertView;
+            numberItemView = (NumberItemView) convertView;
         }
 
-        dataItemView.bind((DataItem) getItem(position));
+//        dataItemView.bind(getItem(position));
 
-        return dataItemView;
+        numberItemView.bind((Integer) getItem(position));
+
+        return numberItemView;
     }
 
-
-    public void setDataItems(List<DataItem> dataItems) {
-        this.dataItems = dataItems;
+    public void setDataItems(List<Integer> pages) {
+        this.dataItems = pages;
         notifyDataSetChanged();
     }
 }

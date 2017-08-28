@@ -15,17 +15,21 @@ import java.util.List;
 @EBean
 public class Repository {
 
-    private List<DataItem> itemList = new ArrayList<>();
+    private List<Integer> itemList = new ArrayList<>();
 
     //invoke after injected
     @AfterInject
     void init(){
-        for (int i = 0; i < 10; i++) {
-            itemList.add(new DataItem("Name " + i));
+        for (int i = 1; i <= 10; i++) {
+            itemList.add(i);
         }
     }
 
-    public List<DataItem> getAllItems(){
+    public List<Integer> getAllItems(){
         return itemList;
+    }
+
+    public int getCount(){
+        return itemList.size();
     }
 }

@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="android.dmi.pmf.novica.myapplication.activity.MainActivity">
+    tools:context="android.dmi.pmf.novica.myapplication.activity.MainActivity"
+    android:orientation="vertical">
 
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ListView
-            android:id="@+id/listView"
+        <android.dmi.pmf.novica.myapplication.view.PageScrollerView_
+            android:id="@+id/pageScrollerCustomView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true">
+
+        </android.dmi.pmf.novica.myapplication.view.PageScrollerView_>
+
+
+        <EditText
+            android:id="@+id/setPage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="set page..."
+            android:layout_below="@+id/pageScrollerCustomView"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/linearLayout" />
-    </LinearLayout>
+            android:layout_marginTop="94dp" />
 
 
-
-</RelativeLayout>
+</LinearLayout>
