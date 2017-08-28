@@ -54,8 +54,11 @@ public class DataAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(int position, View convertView, ViewGroup parent) {
 
+        if (convertView == null) {
+
+        }
 
         return null;
     }
@@ -63,5 +66,6 @@ public class DataAdapter extends BaseAdapter {
 
     public void setConversations(List<DataItem> dataItems) {
         this.dataItems = dataItems;
+        notifyDataSetChanged();
     }
 }
