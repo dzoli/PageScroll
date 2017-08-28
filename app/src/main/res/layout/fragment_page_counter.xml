@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--<TextView-->
+        <!--android:id="@+id/pageText"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:gravity="center"-->
+        <!--android:lineSpacingExtra="4sp"-->
+        <!--android:text="@string/page"-->
+        <!--android:textColor="@color/pageLabelGrey"-->
+        <!--android:textSize="12sp" />-->
+
+    <!--<ch.ringler.drtaxpocket.view.PageScrollView-->
+        <!--android:id="@+id/pageNumberScroller"-->
+        <!--android:layout_width="12dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_marginStart="5dp"-->
+        <!--android:clickable="false"-->
+        <!--android:descendantFocusability="blocksDescendants"-->
+        <!--android:fadingEdge="vertical"-->
+        <!--android:fadingEdgeLength="20dp"-->
+        <!--android:focusable="false"-->
+        <!--android:focusableInTouchMode="false"-->
+        <!--android:nestedScrollingEnabled="false"-->
+        <!--android:requiresFadingEdge="vertical"-->
+        <!--android:scrollbars="none"-->
+        <!--android:showDividers="none" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/pageLabel"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:gravity="center"-->
+        <!--android:textColor="@color/pageLabelGrey"-->
+        <!--android:textSize="12sp" />-->
+
+</LinearLayout>
