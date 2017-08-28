@@ -14,18 +14,17 @@ import org.androidannotations.annotations.ViewById;
  * Created by Novica on 8/28/2017.
  */
 
-
 @EViewGroup(R.layout.item_view_data)
-public class DataItemView  extends LinearLayout {
+public class DataItemView extends LinearLayout {
 
     @ViewById
-    TextView name;
+    public TextView name;
 
     public DataItemView(Context context) {
         super(context);
     }
 
-    public void bind(DataItem dataItem){
-        name.setText(dataItem.getName());
+    public void bind(DataItem item){
+        name.setText(item.getName());
     }
 }

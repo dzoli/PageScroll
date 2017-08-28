@@ -3,6 +3,8 @@ package android.dmi.pmf.novica.myapplication.adapter;
 import android.content.Context;
 import android.dmi.pmf.novica.myapplication.dao.Repository;
 import android.dmi.pmf.novica.myapplication.model.DataItem;
+import android.dmi.pmf.novica.myapplication.view.DataItemView;
+import android.dmi.pmf.novica.myapplication.view.DataItemView_;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -34,7 +36,7 @@ public class DataAdapter extends BaseAdapter {
 
     @AfterInject
     void inti() {
-        setConversations(repositoryBean.getAllItems());
+        setDataItems(repositoryBean.getAllItems());
     }
 
 
@@ -56,15 +58,20 @@ public class DataAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        final DataItemView dataItemView;
         if (convertView == null) {
-
+            dataItemView = DataItemView_.build(context);
+        }else{
+            dataItemView = (DataItemView) convertView;
         }
 
-        return null;
+        dataItemView.bind((DataItem) getItem(position));
+
+        return dataItemView;
     }
 
 
-    public void setConversations(List<DataItem> dataItems) {
+    public void setDataItems(List<DataItem> dataItems) {
         this.dataItems = dataItems;
         notifyDataSetChanged();
     }
