@@ -1,7 +1,6 @@
 package android.dmi.pmf.novica.myapplication.activity;
 
 import android.dmi.pmf.novica.myapplication.R;
-import android.dmi.pmf.novica.myapplication.dao.Repository;
 import android.dmi.pmf.novica.myapplication.view.PageScrollerView;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.NumberPicker;
@@ -12,7 +11,6 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,10 +20,7 @@ public class MainActivity extends AppCompatActivity {
     @ViewById
     public PageScrollerView pageScrollerCustomView;
 
-    @Bean
-    public Repository repositoryBean;
-
-    @ViewById
+      @ViewById
     public NumberPicker numberPicker2;
 
 

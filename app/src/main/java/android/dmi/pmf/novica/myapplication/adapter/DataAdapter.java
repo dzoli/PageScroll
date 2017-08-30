@@ -1,15 +1,12 @@
 package android.dmi.pmf.novica.myapplication.adapter;
 
 import android.content.Context;
-import android.dmi.pmf.novica.myapplication.dao.Repository;
 import android.dmi.pmf.novica.myapplication.view.NumberItemView;
 import android.dmi.pmf.novica.myapplication.view.NumberItemView_;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import org.androidannotations.annotations.AfterInject;
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 
@@ -29,9 +26,6 @@ public class DataAdapter extends BaseAdapter {
 
     @RootContext
     Context context;
-
-    @Bean
-    Repository repositoryBean;
 
     @Override
     public int getCount() {

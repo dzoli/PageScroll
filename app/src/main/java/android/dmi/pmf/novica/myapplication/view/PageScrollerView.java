@@ -3,11 +3,9 @@ package android.dmi.pmf.novica.myapplication.view;
 import android.content.Context;
 import android.dmi.pmf.novica.myapplication.R;
 import android.dmi.pmf.novica.myapplication.adapter.DataAdapter;
-import android.dmi.pmf.novica.myapplication.dao.Repository;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ListView;
-import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,9 +32,6 @@ public class PageScrollerView extends RelativeLayout {
     public TextView maxPages;
 
     @Bean
-    public Repository repositoryBean;
-
-    @Bean
     public DataAdapter dataAdapter;
 
     List<Integer> itemList = new ArrayList<>();
@@ -55,13 +50,9 @@ public class PageScrollerView extends RelativeLayout {
         }
 
         maxItems = max;
-
-        //currentPageListView.setEnabled(false);
-
+        currentPageListView.setEnabled(false);
         dataAdapter.setPagesNumber(itemList);
-
         currentPageListView.setAdapter(dataAdapter);
-
         maxPages.setText(max.toString());
     }
 
@@ -78,15 +69,15 @@ public class PageScrollerView extends RelativeLayout {
     public void addElements(Integer numberElements) {
         for (int i = 1; i <= numberElements; i++) {
             itemList.add(maxItems+2);
-            Log.d("MAX", "MAX number" + maxItems);
             maxItems++;
         }
-        //maxItems += numberElements;
+
         dataAdapter.notifyDataSetChanged();
         maxPages.setText(maxItems.toString());
 
     }
 
+    //@param numberElements - number of elements to delete
     public void deleteElements (Integer numberElements) {
 
         for (int i = 1; i <= numberElements; i++) {
@@ -94,9 +85,7 @@ public class PageScrollerView extends RelativeLayout {
             maxItems--;
         }
 
-        for (int i = 0; i <= maxItems+1; i++) {
-            itemList.set(i, i);
-        }
+        updateList();
 
         dataAdapter.notifyDataSetChanged();
         maxPages.setText(maxItems.toString());
@@ -106,27 +95,20 @@ public class PageScrollerView extends RelativeLayout {
     //@param numberElementsList is list of positions which we deleting (page number for example)
     public void deleteElementsList (List<Integer> numberElementsList) {
 
-        for (Integer el :
-                numberElementsList) {
+        for (Integer el : numberElementsList) {
 
             if (currentPage >= el) {
 
                 itemList.remove(el);
                 maxItems--;
-
-                for (int i = 0; i <= maxItems+1; i++) {
-                    itemList.set(i, i);
-                }
-
+                updateList();
                 setCurrPage(currentPage-1);
+
             } else {
 
                 itemList.remove(el);
                 maxItems--;
-
-                for (int i = 0; i <= maxItems+1; i++) {
-                    itemList.set(i, i);
-                }
+                updateList();
             }
         }
 
@@ -136,6 +118,12 @@ public class PageScrollerView extends RelativeLayout {
 
     public int getNumberOfPages(){
         return maxItems;
+    }
+
+    public void updateList() {
+        for (int i = 0; i <= maxItems+1; i++) {
+            itemList.set(i, i);
+        }
     }
 
 }
