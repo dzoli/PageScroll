@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
         pageScrollerCustomView.setMaxCount(10);
 
-
         numberPicker2.setMaxValue(repositoryBean.getCount());
         numberPicker2.setMinValue(1);
         numberPicker2.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {

@@ -4,9 +4,11 @@ import android.content.Context;
 import android.dmi.pmf.novica.myapplication.R;
 import android.dmi.pmf.novica.myapplication.adapter.DataAdapter;
 import android.dmi.pmf.novica.myapplication.dao.Repository;
+import android.dmi.pmf.novica.myapplication.util.ScrollerRunnable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -54,7 +56,7 @@ public class PageScrollerView extends RelativeLayout {
 
         maxItems = max;
 
-        currentPageListView.setEnabled(false);
+        //currentPageListView.setEnabled(false);
 
         dataAdapter.setPagesNumber(itemList);
 
@@ -69,14 +71,17 @@ public class PageScrollerView extends RelativeLayout {
 
         currentPage = currPage;
         currentPageListView.smoothScrollToPositionFromTop(currPage, h1 / 2 - h2 / 2, 350);
+
     }
 
     //@Param numberElements  - add number elements
     public void addElements(Integer numberElements) {
-        for (int i = 2; i <= numberElements+1; i++) {
-            itemList.add(maxItems+i);
+        for (int i = 1; i <= numberElements; i++) {
+            itemList.add(maxItems+2);
+            Log.d("MAX", "MAX number" + maxItems);
+            maxItems++;
         }
-        maxItems += numberElements;
+        //maxItems += numberElements;
         dataAdapter.notifyDataSetChanged();
         maxPages.setText(maxItems.toString());
 
@@ -89,8 +94,13 @@ public class PageScrollerView extends RelativeLayout {
             maxItems--;
         }
 
+        for (int i = 0; i <= maxItems+1; i++) {
+            itemList.set(i, i);
+        }
+
         dataAdapter.notifyDataSetChanged();
         maxPages.setText(maxItems.toString());
+
     }
 
     //@param numberElementsList is list of positions which we deleting (page number for example)
@@ -104,8 +114,8 @@ public class PageScrollerView extends RelativeLayout {
                 itemList.remove(el);
                 maxItems--;
 
-                List<Integer> newList = new ArrayList<>();
-                for (int i = 1; i <= maxItems; i++) {
+
+                for (int i = 0; i <= maxItems+1; i++) {
                     itemList.set(i, i);
                 }
 
@@ -115,18 +125,17 @@ public class PageScrollerView extends RelativeLayout {
                 itemList.remove(el);
                 maxItems--;
 
-                List<Integer> newList = new ArrayList<>();
-                for (int i = 1; i <= maxItems; i++) {
+
+                for (int i = 0; i <= maxItems+1; i++) {
                     itemList.set(i, i);
                 }
-
             }
-
         }
 
         dataAdapter.notifyDataSetChanged();
         maxPages.setText(maxItems.toString());
 
     }
+
 
 }
