@@ -30,16 +30,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     @AfterViews
-    void init(){
+    void init() {
 
         pageScrollerCustomView.setMaxCount(10);
 
-        numberPicker2.setMaxValue(repositoryBean.getCount());
+        numberPicker2.setMaxValue(pageScrollerCustomView.getNumberOfPages());
         numberPicker2.setMinValue(1);
         numberPicker2.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal)
-            {
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 pageScrollerCustomView.setCurrPage(numberPicker2.getValue());
             }
         });
@@ -47,18 +46,21 @@ public class MainActivity extends AppCompatActivity {
 
     @Click
     void addElements() {
-       pageScrollerCustomView.addElements(3);
+        pageScrollerCustomView.addElements(3);
+        numberPicker2.setMaxValue(pageScrollerCustomView.getNumberOfPages());
     }
 
     @Click
     void deleteElements() {
         pageScrollerCustomView.deleteElements(4);
+        numberPicker2.setMaxValue(pageScrollerCustomView.getNumberOfPages());
     }
 
     @Click
     void deleteElementsList() {
-        List<Integer> numberList = Arrays.asList(3,6);
+        List<Integer> numberList = Arrays.asList(3, 6);
         pageScrollerCustomView.deleteElementsList(numberList);
+        numberPicker2.setMaxValue(pageScrollerCustomView.getNumberOfPages());
     }
 
 }

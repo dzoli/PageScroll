@@ -33,11 +33,6 @@ public class DataAdapter extends BaseAdapter {
     @Bean
     Repository repositoryBean;
 
-    @AfterInject
-    void inti() {
-        setPagesNumber(repositoryBean.getAllItems());
-    }
-
     @Override
     public int getCount() {
         return dataItems.size();
@@ -74,12 +69,13 @@ public class DataAdapter extends BaseAdapter {
         return numberItemView;
     }
 
-    public void setPagesNumber(List<Integer> pages) {
-        this.dataItems = pages;
+    public void setPagesNumber(List<Integer> data) {
+        dataItems = data;
         notifyDataSetChanged();
     }
 
     public List<Integer> getDataItems(){
         return dataItems;
     }
+
 }

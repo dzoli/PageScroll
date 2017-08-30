@@ -4,7 +4,6 @@ import android.content.Context;
 import android.dmi.pmf.novica.myapplication.R;
 import android.dmi.pmf.novica.myapplication.adapter.DataAdapter;
 import android.dmi.pmf.novica.myapplication.dao.Repository;
-import android.dmi.pmf.novica.myapplication.util.ScrollerRunnable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ListView;
@@ -114,7 +113,6 @@ public class PageScrollerView extends RelativeLayout {
                 itemList.remove(el);
                 maxItems--;
 
-
                 for (int i = 0; i <= maxItems+1; i++) {
                     itemList.set(i, i);
                 }
@@ -125,7 +123,6 @@ public class PageScrollerView extends RelativeLayout {
                 itemList.remove(el);
                 maxItems--;
 
-
                 for (int i = 0; i <= maxItems+1; i++) {
                     itemList.set(i, i);
                 }
@@ -134,8 +131,10 @@ public class PageScrollerView extends RelativeLayout {
 
         dataAdapter.notifyDataSetChanged();
         maxPages.setText(maxItems.toString());
-
     }
 
+    public int getNumberOfPages(){
+        return maxItems;
+    }
 
 }
