@@ -35,7 +35,7 @@ public class DataAdapter extends BaseAdapter {
 
     @AfterInject
     void inti() {
-        setDataItems(repositoryBean.getAllItems());
+        setPagesNumber(repositoryBean.getAllItems());
     }
 
     @Override
@@ -63,21 +63,23 @@ public class DataAdapter extends BaseAdapter {
             numberItemView = (NumberItemView) convertView;
         }
 
-//        dataItemView.bind(getItem(position));
-
         numberItemView.bind((Integer) getItem(position));
 
-        if (position == 0 || position == dataItems.size()-1) {
+        if (position == 0 || position == dataItems.size() - 1) {
             numberItemView.setVisibility(View.GONE);
-        }else{
+        } else {
             numberItemView.setVisibility(View.VISIBLE);
         }
 
         return numberItemView;
     }
 
-    public void setDataItems(List<Integer> pages) {
+    public void setPagesNumber(List<Integer> pages) {
         this.dataItems = pages;
         notifyDataSetChanged();
+    }
+
+    public List<Integer> getDataItems(){
+        return dataItems;
     }
 }

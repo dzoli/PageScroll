@@ -1,25 +1,14 @@
 package android.dmi.pmf.novica.myapplication.activity;
 
 import android.dmi.pmf.novica.myapplication.R;
-import android.dmi.pmf.novica.myapplication.adapter.DataAdapter;
 import android.dmi.pmf.novica.myapplication.dao.Repository;
 import android.dmi.pmf.novica.myapplication.view.PageScrollerView;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.NumberPicker;
 
-import com.shawnlin.numberpicker.NumberPicker;
-
-import org.androidannotations.annotations.AfterTextChange;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_main)
@@ -32,20 +21,20 @@ public class MainActivity extends AppCompatActivity {
     public Repository repositoryBean;
 
     @ViewById
-    public NumberPicker number_picker;
+    public NumberPicker numberPicker2;
 
-    //after injected views != null
     @AfterViews
     void init(){
         pageScrollerCustomView.initFor();
-        pageScrollerCustomView.setMaxPages(repositoryBean.getCount());
-        number_picker.setMaxValue(repositoryBean.getCount());
+        pageScrollerCustomView.setMaxCount(repositoryBean.getCount());
 
-        number_picker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+        numberPicker2.setMaxValue(repositoryBean.getCount());
+        numberPicker2.setMinValue(1);
+        numberPicker2.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal)
             {
-                pageScrollerCustomView.setCurrPage(number_picker.getValue());
+                pageScrollerCustomView.setCurrPage(numberPicker2.getValue());
             }
         });
     }
