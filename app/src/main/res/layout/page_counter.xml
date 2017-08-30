@@ -28,10 +28,11 @@
             android:requiresFadingEdge="vertical"
             android:scrollbars="none"
 
-            android:focusableInTouchMode="false"
-            android:focusable="false"
+
             android:clickable="false"
             android:enabled="false"
+
+
 
             />
 

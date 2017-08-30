@@ -18,7 +18,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <NumberPicker
             android:id="@+id/numberPicker2"
@@ -27,6 +27,24 @@
             android:layout_centerInParent="true" />
 
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/addElements"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add" />
+
+    <Button
+        android:id="@+id/deleteElements"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete" />
+
+    <Button
+        android:id="@+id/deleteElementsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DeleteList" />
 
 
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.dmi.pmf.novica.myapplication.R;
 import android.dmi.pmf.novica.myapplication.adapter.DataAdapter;
 import android.dmi.pmf.novica.myapplication.dao.Repository;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,21 +37,26 @@ public class PageScrollerView extends RelativeLayout {
     @Bean
     public DataAdapter dataAdapter;
 
+    List<Integer> itemList = new ArrayList<>();
+
+    Integer maxItems = 0;
+
     public PageScrollerView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public void initFor() {
-        List<Integer> data = dataAdapter.getDataItems();
+    public void setMaxCount(Integer max) {
 
-        data.add(0, 0);
-        data.add(data.size(), data.size());
-        dataAdapter.setPagesNumber(data);
+        for (int i = 0; i <= max+1; i++) {
+            itemList.add(i);
+        }
+
+        maxItems = max;
+
+        dataAdapter.setPagesNumber(itemList);
 
         currentPageListView.setAdapter(dataAdapter);
-    }
 
-    public void setMaxCount(Integer max) {
         maxPages.setText(max.toString());
     }
 
@@ -58,6 +65,39 @@ public class PageScrollerView extends RelativeLayout {
         int h2 = maxPages.getHeight();
 
         currentPageListView.smoothScrollToPositionFromTop(currPage, h1 / 2 - h2 / 2, 350);
+    }
+
+    public void addElements(Integer numberElements) {
+        for (int i = 2; i <= numberElements+1; i++) {
+            itemList.add(maxItems+i);
+        }
+        maxItems += numberElements;
+        dataAdapter.notifyDataSetChanged();
+        maxPages.setText(maxItems.toString());
+
+    }
+
+    public void deleteElements (Integer numberElements) {
+
+        for (int i = 1; i <= numberElements; i++) {
+            itemList.remove(maxItems);
+            maxItems --;
+        }
+
+        dataAdapter.notifyDataSetChanged();
+        maxPages.setText(maxItems.toString());
+    }
+
+    public void deleteElementsList (List<Integer> numberElementsList) {
+
+        for (Integer el :
+                numberElementsList) {
+            itemList.remove(el);
+            maxItems --;
+        }
+
+        dataAdapter.notifyDataSetChanged();
+        maxPages.setText(maxItems.toString());
     }
 
 }
