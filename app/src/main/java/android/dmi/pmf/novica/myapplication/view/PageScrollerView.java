@@ -5,7 +5,11 @@ import android.dmi.pmf.novica.myapplication.R;
 import android.dmi.pmf.novica.myapplication.activity.MainActivity;
 import android.dmi.pmf.novica.myapplication.adapter.DataAdapter;
 import android.dmi.pmf.novica.myapplication.dao.Repository;
+import android.os.Handler;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -20,6 +24,8 @@ import org.androidannotations.annotations.EView;
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.RootContext;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.List;
 
 /**
  * Created by Novica on 8/28/2017.
@@ -47,26 +53,27 @@ public class PageScrollerView extends RelativeLayout {
     }
 
     public void initFor() {
-//        ArrayAdapter<Integer> arrAdapter;
-//        arrAdapter = new ArrayAdapter<Integer>(getContext(),
-//                                                android.R.layout.simple_list_item_1,
-//                                                repositoryBean.getAllItems());
-
-        dataAdapter.setDataItems(repositoryBean.getAllItems());
+        List<Integer> data = repositoryBean.getAllItems();
+        data.add(0, 0);
+        data.add(data.size(), data.size());
+        dataAdapter.setDataItems(data);
         currentPageListView.setAdapter(dataAdapter);
     }
 
     public void setMaxPages(Integer max) {
-        maxPages.setText(max.toString()); // check scope
+        maxPages.setText(max.toString());
     }
 
-    public void setCurrPage(Integer currPage) {
-//        currentPageListView.setSelection(currPage - 1); // check scope
-        if((currPage < 0) || (currPage > 10)){
-            Toast.makeText(getContext(), " == " + "Out of bound", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        currentPageListView.smoothScrollToPosition(currPage - 1);
+    public void setCurrPage(final Integer currPage) {
+//        currentPageListView.smoothScrollToPosition(currPage-1);
+//        smoothScrollToPositionFromTop(currentPageListView, currPage - 1);
+//        currentPageListView.setSelection(currPage - 1);
+
+        int h1 = currentPageListView.getHeight();
+        int h2 = maxPages.getHeight();
+
+        currentPageListView.smoothScrollToPositionFromTop(currPage, h1/2 - h2/2, 350);
     }
+
 
 }

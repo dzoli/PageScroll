@@ -26,4 +26,12 @@ public class NumberItemView extends LinearLayout {
     public void bind(Integer num){
         numberTv.setText(num.toString());
     }
+
+    public int getNumber(){
+        return Integer.parseInt(numberTv.getText().toString());
+    }
+
+    public void setNumber(String number) {
+        numberTv.setText(number);
+    }
 }

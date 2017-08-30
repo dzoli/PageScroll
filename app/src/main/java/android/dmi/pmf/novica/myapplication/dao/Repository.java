@@ -1,7 +1,5 @@
 package android.dmi.pmf.novica.myapplication.dao;
 
-import android.dmi.pmf.novica.myapplication.model.DataItem;
-
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.EBean;
 
@@ -20,7 +18,7 @@ public class Repository {
     //invoke after injected
     @AfterInject
     void init(){
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= 12; i++) {
             itemList.add(i);
         }
     }

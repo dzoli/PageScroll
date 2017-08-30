@@ -12,9 +12,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.shawnlin.numberpicker.NumberPicker;
+
 import org.androidannotations.annotations.AfterTextChange;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
@@ -23,33 +26,28 @@ import org.androidannotations.annotations.ViewById;
 public class MainActivity extends AppCompatActivity {
 
     @ViewById
-    public EditText setPage;
-
-    @ViewById
     public PageScrollerView pageScrollerCustomView;
 
     @Bean
     public Repository repositoryBean;
 
+    @ViewById
+    public NumberPicker number_picker;
+
     //after injected views != null
     @AfterViews
     void init(){
         pageScrollerCustomView.initFor();
-        setPage.setText("12s");
-
         pageScrollerCustomView.setMaxPages(repositoryBean.getCount());
-    }
+        number_picker.setMaxValue(repositoryBean.getCount());
 
-    @AfterTextChange
-    void setPageAfterTextChanged(TextView setPage) {
-//        Toast.makeText(this, " == " + setPage.getText().toString(), Toast.LENGTH_SHORT).show();
-        try {
-            Integer newPage = Integer.parseInt(setPage.getText().toString());
-            pageScrollerCustomView.setCurrPage(newPage);
-        } catch (Exception e) {
-            Toast.makeText(this, "== err ==", Toast.LENGTH_SHORT).show();
-            Log.d("=== MainActivity ", "NumberFormatException");
-        }
+        number_picker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal)
+            {
+                pageScrollerCustomView.setCurrPage(number_picker.getValue());
+            }
+        });
     }
 
 }

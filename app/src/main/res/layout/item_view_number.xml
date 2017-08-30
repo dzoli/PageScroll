@@ -6,10 +6,10 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_centerInParent="true"
         android:id="@+id/numberTv"
-        android:layout_width="wrap_content"
+        android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_centerInParent="true"
         android:gravity="center"
         android:textSize="12sp" />
 

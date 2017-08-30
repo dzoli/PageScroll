@@ -2,9 +2,6 @@ package android.dmi.pmf.novica.myapplication.adapter;
 
 import android.content.Context;
 import android.dmi.pmf.novica.myapplication.dao.Repository;
-import android.dmi.pmf.novica.myapplication.model.DataItem;
-import android.dmi.pmf.novica.myapplication.view.DataItemView;
-import android.dmi.pmf.novica.myapplication.view.DataItemView_;
 import android.dmi.pmf.novica.myapplication.view.NumberItemView;
 import android.dmi.pmf.novica.myapplication.view.NumberItemView_;
 import android.view.View;
@@ -62,13 +59,19 @@ public class DataAdapter extends BaseAdapter {
         final NumberItemView numberItemView;
         if (convertView == null) {
             numberItemView = NumberItemView_.build(context);
-        }else{
+        } else {
             numberItemView = (NumberItemView) convertView;
         }
 
 //        dataItemView.bind(getItem(position));
 
         numberItemView.bind((Integer) getItem(position));
+
+        if (position == 0 || position == dataItems.size()-1) {
+            numberItemView.setVisibility(View.GONE);
+        }else{
+            numberItemView.setVisibility(View.VISIBLE);
+        }
 
         return numberItemView;
     }
