@@ -10,11 +10,11 @@
             android:id="@+id/page"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/height_text_elements"
-            android:gravity="center"
-            android:textSize="@dimen/text"
-            android:text="Page"
+            android:layout_marginRight="8dp"
             android:layout_marginTop="@dimen/margins"
-            android:layout_marginRight="8dp"/>
+            android:gravity="center"
+            android:text="Page"
+            android:textSize="@dimen/text" />
 
 
         <ListView
@@ -22,36 +22,30 @@
             android:layout_width="30dp"
             android:layout_height="120dp"
             android:layout_toRightOf="@+id/page"
+            android:clickable="false"
+            android:divider="@null"
+            android:enabled="false"
             android:fadingEdgeLength="50dp"
             android:gravity="center"
-            android:divider="@null"
             android:requiresFadingEdge="vertical"
-            android:scrollbars="none"
-
-
-            android:clickable="false"
-            android:enabled="false"
-
-
-
-            />
+            android:scrollbars="none" />
 
         <TextView
-            android:layout_marginTop="@dimen/margins"
             android:id="@+id/slash"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/height_text_elements"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="@dimen/margins"
             android:layout_toRightOf="@+id/currentPageListView"
             android:gravity="center"
             android:text="/"
-            android:textSize="@dimen/text"
-            android:layout_marginRight="4dp"/>
+            android:textSize="@dimen/text" />
 
         <TextView
-            android:layout_marginTop="@dimen/margins"
             android:id="@+id/maxPages"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/height_text_elements"
+            android:layout_marginTop="@dimen/margins"
             android:layout_toRightOf="@+id/slash"
             android:gravity="center"
             android:text="maxPages"

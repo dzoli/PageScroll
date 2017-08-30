@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     @AfterViews
     void init() {
 
-        pageScrollerCustomView.setMaxCount(10);
+        pageScrollerCustomView.setMaxCount(30);
 
         numberPicker2.setMaxValue(pageScrollerCustomView.getNumberOfPages());
         numberPicker2.setMinValue(1);

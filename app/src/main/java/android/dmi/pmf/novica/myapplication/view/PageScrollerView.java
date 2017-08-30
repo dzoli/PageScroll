@@ -11,6 +11,7 @@ import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
@@ -64,13 +65,13 @@ public class PageScrollerView extends RelativeLayout {
         maxPages.setText(max.toString());
     }
 
+    @Background
     public void setCurrPage(final Integer currPage) {
         int h1 = currentPageListView.getHeight();
         int h2 = maxPages.getHeight();
 
         currentPage = currPage;
-        currentPageListView.smoothScrollToPositionFromTop(currPage, h1 / 2 - h2 / 2, 350);
-
+        currentPageListView.smoothScrollToPositionFromTop(currPage, h1 / 2 - h2 / 2, 200);
     }
 
     //@Param numberElements  - add number elements
