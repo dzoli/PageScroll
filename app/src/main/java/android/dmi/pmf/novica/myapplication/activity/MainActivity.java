@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Click
     void deleteElementsList() {
-        List<Integer> numberList = Arrays.asList(2,5,7);
+        List<Integer> numberList = Arrays.asList(3,6);
         pageScrollerCustomView.deleteElementsList(numberList);
     }
 

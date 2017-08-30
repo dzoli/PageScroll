@@ -40,6 +40,7 @@ public class PageScrollerView extends RelativeLayout {
     List<Integer> itemList = new ArrayList<>();
 
     Integer maxItems = 0;
+    Integer currentPage = 0;
 
     public PageScrollerView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -53,6 +54,8 @@ public class PageScrollerView extends RelativeLayout {
 
         maxItems = max;
 
+        currentPageListView.setEnabled(false);
+
         dataAdapter.setPagesNumber(itemList);
 
         currentPageListView.setAdapter(dataAdapter);
@@ -64,9 +67,11 @@ public class PageScrollerView extends RelativeLayout {
         int h1 = currentPageListView.getHeight();
         int h2 = maxPages.getHeight();
 
+        currentPage = currPage;
         currentPageListView.smoothScrollToPositionFromTop(currPage, h1 / 2 - h2 / 2, 350);
     }
 
+    //@Param numberElements  - add number elements
     public void addElements(Integer numberElements) {
         for (int i = 2; i <= numberElements+1; i++) {
             itemList.add(maxItems+i);
@@ -81,23 +86,47 @@ public class PageScrollerView extends RelativeLayout {
 
         for (int i = 1; i <= numberElements; i++) {
             itemList.remove(maxItems);
-            maxItems --;
+            maxItems--;
         }
 
         dataAdapter.notifyDataSetChanged();
         maxPages.setText(maxItems.toString());
     }
 
+    //@param numberElementsList is list of positions which we deleting (page number for example)
     public void deleteElementsList (List<Integer> numberElementsList) {
 
         for (Integer el :
                 numberElementsList) {
-            itemList.remove(el);
-            maxItems --;
+
+            if (currentPage >= el) {
+
+                itemList.remove(el);
+                maxItems--;
+
+                List<Integer> newList = new ArrayList<>();
+                for (int i = 1; i <= maxItems; i++) {
+                    itemList.set(i, i);
+                }
+
+                setCurrPage(currentPage-1);
+            } else {
+
+                itemList.remove(el);
+                maxItems--;
+
+                List<Integer> newList = new ArrayList<>();
+                for (int i = 1; i <= maxItems; i++) {
+                    itemList.set(i, i);
+                }
+
+            }
+
         }
 
         dataAdapter.notifyDataSetChanged();
         maxPages.setText(maxItems.toString());
+
     }
 
 }
