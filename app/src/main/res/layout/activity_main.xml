@@ -31,19 +31,19 @@
         android:id="@+id/addElements"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add" />
+        android:text="Add 3 elements" />
 
     <Button
         android:id="@+id/deleteElements"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Delete" />
+        android:text="Delete 4" />
 
     <Button
         android:id="@+id/deleteElementsList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="DeleteList" />
+        android:text="DeleteList 3 and 6" />
 
 
 </LinearLayout>

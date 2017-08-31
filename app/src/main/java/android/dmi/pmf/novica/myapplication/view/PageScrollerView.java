@@ -4,7 +4,6 @@ import android.content.Context;
 import android.dmi.pmf.novica.myapplication.R;
 import android.dmi.pmf.novica.myapplication.adapter.DataAdapter;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,7 +42,6 @@ public class PageScrollerView extends RelativeLayout {
     }
 
     public void setMaxCount(Integer max) {
-
         for (int i = 0; i <= max+1; i++) {
             itemList.add(i);
         }
@@ -67,41 +65,27 @@ public class PageScrollerView extends RelativeLayout {
     public void addElements(Integer numberElements) {
         for (int i = 1; i <= numberElements; i++) {
             itemList.add(itemList.size());
-
         }
 
         dataAdapter.notifyDataSetChanged();
         maxPages.setText(Integer.toString(itemList.size()-2));
-
     }
 
     //@param numberElements - number of elements to delete
     public void deleteElements (Integer numberElements) {
-
-        for (int i = 1; i <= numberElements; i++) {
-            itemList.remove(itemList.size()-2);
-        }
-
-        updateList();
-
+        itemList.subList(itemList.size() - numberElements, itemList.size()).clear();
         dataAdapter.notifyDataSetChanged();
         maxPages.setText(Integer.toString(itemList.size()-2));
-
     }
 
     //@param numberElementsList is list of positions which we deleting (page number for example)
     public void deleteElementsList (List<Integer> numberElementsList) {
-
         for (Integer el : numberElementsList) {
-
             if (currentPage >= el) {
-
                 itemList.remove(el);
                 updateList();
                 setCurrPage(currentPage-1);
-
             } else {
-
                 itemList.remove(el);
                 updateList();
             }
@@ -120,5 +104,4 @@ public class PageScrollerView extends RelativeLayout {
             itemList.set(i, i);
         }
     }
-
 }

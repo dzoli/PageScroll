@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.NumberPicker;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
@@ -22,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
     @ViewById
     public NumberPicker numberPicker2;
-
 
     @AfterViews
     void init() {

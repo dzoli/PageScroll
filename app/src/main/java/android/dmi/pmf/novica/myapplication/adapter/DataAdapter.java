@@ -17,8 +17,6 @@ import java.util.List;
  * Created by Novica on 8/28/2017.
  */
 
-// List View adapter
-
 @EBean
 public class DataAdapter extends BaseAdapter {
 
