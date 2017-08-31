@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     @ViewById
     public PageScrollerView pageScrollerCustomView;
 
-      @ViewById
+    @ViewById
     public NumberPicker numberPicker2;
 
 

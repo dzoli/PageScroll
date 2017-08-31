@@ -36,7 +36,6 @@ public class PageScrollerView extends RelativeLayout {
 
     List<Integer> itemList = new ArrayList<>();
 
-    Integer maxItems = 0;
     Integer currentPage = 0;
 
     public PageScrollerView(Context context, AttributeSet attrs) {
@@ -49,7 +48,6 @@ public class PageScrollerView extends RelativeLayout {
             itemList.add(i);
         }
 
-        maxItems = max;
         currentPageListView.setEnabled(false);
         dataAdapter.setPagesNumber(itemList);
         currentPageListView.setAdapter(dataAdapter);
@@ -68,12 +66,12 @@ public class PageScrollerView extends RelativeLayout {
     //@Param numberElements  - add number elements
     public void addElements(Integer numberElements) {
         for (int i = 1; i <= numberElements; i++) {
-            itemList.add(maxItems+2);
-            maxItems++;
+            itemList.add(itemList.size());
+
         }
 
         dataAdapter.notifyDataSetChanged();
-        maxPages.setText(maxItems.toString());
+        maxPages.setText(Integer.toString(itemList.size()-2));
 
     }
 
@@ -81,14 +79,13 @@ public class PageScrollerView extends RelativeLayout {
     public void deleteElements (Integer numberElements) {
 
         for (int i = 1; i <= numberElements; i++) {
-            itemList.remove(maxItems);
-            maxItems--;
+            itemList.remove(itemList.size()-2);
         }
 
         updateList();
 
         dataAdapter.notifyDataSetChanged();
-        maxPages.setText(maxItems.toString());
+        maxPages.setText(Integer.toString(itemList.size()-2));
 
     }
 
@@ -100,28 +97,26 @@ public class PageScrollerView extends RelativeLayout {
             if (currentPage >= el) {
 
                 itemList.remove(el);
-                maxItems--;
                 updateList();
                 setCurrPage(currentPage-1);
 
             } else {
 
                 itemList.remove(el);
-                maxItems--;
                 updateList();
             }
         }
 
         dataAdapter.notifyDataSetChanged();
-        maxPages.setText(maxItems.toString());
+        maxPages.setText(Integer.toString(itemList.size()-2));
     }
 
     public int getNumberOfPages(){
-        return maxItems;
+        return itemList.size()-2;
     }
 
     public void updateList() {
-        for (int i = 0; i <= maxItems+1; i++) {
+        for (int i = 0; i <= itemList.size()-1; i++) {
             itemList.set(i, i);
         }
     }
