@@ -42,7 +42,6 @@ public class DataAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         final NumberItemView numberItemView;
         if (convertView == null) {
             numberItemView = NumberItemView_.build(context);
@@ -69,5 +68,4 @@ public class DataAdapter extends BaseAdapter {
     public List<Integer> getDataItems(){
         return dataItems;
     }
-
 }

@@ -25,14 +25,14 @@ public class MainActivity extends AppCompatActivity {
     @AfterViews
     void init() {
 
-        pageScrollerCustomView.setMaxCount(30);
+        pageScrollerCustomView.initWithMaxPages(30);
 
         numberPicker2.setMaxValue(pageScrollerCustomView.getNumberOfPages());
         numberPicker2.setMinValue(1);
         numberPicker2.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                pageScrollerCustomView.setCurrPage(numberPicker2.getValue());
+                pageScrollerCustomView.setCurrentPage(numberPicker2.getValue());
             }
         });
     }

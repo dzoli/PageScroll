@@ -4,6 +4,8 @@ import android.content.Context;
 import android.dmi.pmf.novica.myapplication.R;
 import android.dmi.pmf.novica.myapplication.adapter.DataAdapter;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EViewGroup;
+import org.androidannotations.annotations.RootContext;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
@@ -41,10 +44,15 @@ public class PageScrollerView extends RelativeLayout {
         super(context, attrs);
     }
 
-    public void setMaxCount(Integer max) {
+    public void initWithMaxPages(Integer max) {
         for (int i = 0; i <= max+1; i++) {
             itemList.add(i);
         }
+
+        View footerAndHeaderView = ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+                .inflate(R.layout.page_scroller_view_header_and_foother_view, null, false);
+        currentPageListView.addFooterView(footerAndHeaderView);
+        currentPageListView.addHeaderView(footerAndHeaderView);
 
         currentPageListView.setEnabled(false);
         dataAdapter.setPagesNumber(itemList);
@@ -53,7 +61,7 @@ public class PageScrollerView extends RelativeLayout {
     }
 
     @Background
-    public void setCurrPage(final Integer currPage) {
+    public void setCurrentPage(final Integer currPage) {
         int h1 = currentPageListView.getHeight();
         int h2 = maxPages.getHeight();
 
@@ -61,7 +69,6 @@ public class PageScrollerView extends RelativeLayout {
         currentPageListView.smoothScrollToPositionFromTop(currPage, h1 / 2 - h2 / 2, 200);
     }
 
-    //@Param numberElements  - add number elements
     public void addElements(Integer numberElements) {
         for (int i = 1; i <= numberElements; i++) {
             itemList.add(itemList.size());
@@ -71,20 +78,18 @@ public class PageScrollerView extends RelativeLayout {
         maxPages.setText(Integer.toString(itemList.size()-2));
     }
 
-    //@param numberElements - number of elements to delete
     public void deleteElements (Integer numberElements) {
         itemList.subList(itemList.size() - numberElements, itemList.size()).clear();
         dataAdapter.notifyDataSetChanged();
         maxPages.setText(Integer.toString(itemList.size()-2));
     }
 
-    //@param numberElementsList is list of positions which we deleting (page number for example)
     public void deleteElementsList (List<Integer> numberElementsList) {
         for (Integer el : numberElementsList) {
             if (currentPage >= el) {
                 itemList.remove(el);
                 updateList();
-                setCurrPage(currentPage-1);
+                setCurrentPage(currentPage-1);
             } else {
                 itemList.remove(el);
                 updateList();
@@ -99,7 +104,7 @@ public class PageScrollerView extends RelativeLayout {
         return itemList.size()-2;
     }
 
-    public void updateList() {
+    private void updateList() {
         for (int i = 0; i <= itemList.size()-1; i++) {
             itemList.set(i, i);
         }
