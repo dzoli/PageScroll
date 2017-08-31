@@ -20,12 +20,12 @@
         <ListView
             android:id="@+id/currentPageListView"
             android:layout_width="30dp"
-            android:layout_height="120dp"
+            android:layout_height="75dp"
             android:layout_toRightOf="@+id/page"
             android:clickable="false"
             android:divider="@null"
             android:enabled="false"
-            android:fadingEdgeLength="50dp"
+            android:fadingEdgeLength="45dp"
             android:gravity="center"
             android:requiresFadingEdge="vertical"
             android:scrollbars="none" />

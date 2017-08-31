@@ -37,8 +37,7 @@ dependencies {
     //Number Picker
     compile 'com.shawnlin:number-picker:2.4.4'
 
-    //Horizontal wheel
-    compile 'com.github.shchurov:horizontalwheelview:0.9.5'
+
 
     compile 'com.android.support:appcompat-v7:25.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
