@@ -2,10 +2,11 @@ package android.dmi.pmf.novica.myapplication.view;
 
 import android.content.Context;
 import android.dmi.pmf.novica.myapplication.R;
-import android.dmi.pmf.novica.myapplication.adapter.DataAdapter;
+import android.dmi.pmf.novica.myapplication.adapter.PageScrollerAdapter;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,7 +35,7 @@ public class PageScrollerView extends RelativeLayout {
     public TextView maxPages;
 
     @Bean
-    public DataAdapter dataAdapter;
+    public PageScrollerAdapter pageScrollerAdapter;
 
     List<Integer> itemList = new ArrayList<>();
 
@@ -44,10 +45,7 @@ public class PageScrollerView extends RelativeLayout {
         super(context, attrs);
     }
 
-    public void initWithMaxPages(Integer max) {
-        for (int i = 0; i <= max+1; i++) {
-            itemList.add(i);
-        }
+    public void init() {
 
         View footerAndHeaderView = ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                 .inflate(R.layout.page_scroller_view_header_and_foother_view, null, false);
@@ -55,13 +53,40 @@ public class PageScrollerView extends RelativeLayout {
         currentPageListView.addHeaderView(footerAndHeaderView);
 
         currentPageListView.setEnabled(false);
-        dataAdapter.setPagesNumber(itemList);
-        currentPageListView.setAdapter(dataAdapter);
-        maxPages.setText(max.toString());
+        pageScrollerAdapter.setPagesNumber(itemList);
+        currentPageListView.setAdapter(pageScrollerAdapter);
+    }
+
+    public void setMaxCount(Integer maxPage) {
+
+        //TO-DO URADI AKO OBRISE SVE ELEMENTE
+
+        //ako je nula (prvi put da se kreira lista)
+        if (itemList.size() == 0) {
+            for (int i = 0; i <= maxPage+1; i++) {
+                itemList.add(i);
+            }
+            //ako se vrsi dodavanje
+        } else if (maxPage > itemList.size()-2) {
+            int numberElementsAdded = maxPage - itemList.size()+2;
+            for (int i = 1; i <= numberElementsAdded; i++) {
+                itemList.add(itemList.size());
+            }
+            setCurrPage(currentPage);
+
+            //ako se vrsi brisanje (deselekcija)
+        } else if (maxPage < itemList.size()-2) {
+            int numberElementsDeleted = (itemList.size()-2)-maxPage;
+            itemList.subList(itemList.size() - numberElementsDeleted, itemList.size()).clear();
+            //setCurrPage(currentPage);
+        }
+
+        pageScrollerAdapter.setPagesNumber(itemList);
+        maxPages.setText(maxPage.toString());
     }
 
     @Background
-    public void setCurrentPage(final Integer currPage) {
+    public void setCurrPage(final Integer currPage) {
         int h1 = currentPageListView.getHeight();
         int h2 = maxPages.getHeight();
 
@@ -69,44 +94,9 @@ public class PageScrollerView extends RelativeLayout {
         currentPageListView.smoothScrollToPositionFromTop(currPage, h1 / 2 - h2 / 2, 200);
     }
 
-    public void addElements(Integer numberElements) {
-        for (int i = 1; i <= numberElements; i++) {
-            itemList.add(itemList.size());
-        }
-
-        dataAdapter.notifyDataSetChanged();
-        maxPages.setText(Integer.toString(itemList.size()-2));
-    }
-
-    public void deleteElements (Integer numberElements) {
-        itemList.subList(itemList.size() - numberElements, itemList.size()).clear();
-        dataAdapter.notifyDataSetChanged();
-        maxPages.setText(Integer.toString(itemList.size()-2));
-    }
-
-    public void deleteElementsList (List<Integer> numberElementsList) {
-        for (Integer el : numberElementsList) {
-            if (currentPage >= el) {
-                itemList.remove(el);
-                updateList();
-                setCurrentPage(currentPage-1);
-            } else {
-                itemList.remove(el);
-                updateList();
-            }
-        }
-
-        dataAdapter.notifyDataSetChanged();
-        maxPages.setText(Integer.toString(itemList.size()-2));
-    }
-
     public int getNumberOfPages(){
         return itemList.size()-2;
     }
 
-    private void updateList() {
-        for (int i = 0; i <= itemList.size()-1; i++) {
-            itemList.set(i, i);
-        }
-    }
+
 }

@@ -18,7 +18,7 @@ import java.util.List;
  */
 
 @EBean
-public class DataAdapter extends BaseAdapter {
+public class PageScrollerAdapter extends BaseAdapter {
 
     private List<Integer> dataItems = new ArrayList<>();
 

@@ -25,34 +25,41 @@ public class MainActivity extends AppCompatActivity {
     @AfterViews
     void init() {
 
-        pageScrollerCustomView.initWithMaxPages(30);
+        pageScrollerCustomView.init();
+        pageScrollerCustomView.setMaxCount(10);
 
         numberPicker2.setMaxValue(pageScrollerCustomView.getNumberOfPages());
         numberPicker2.setMinValue(1);
         numberPicker2.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                pageScrollerCustomView.setCurrentPage(numberPicker2.getValue());
+                pageScrollerCustomView.setCurrPage(numberPicker2.getValue());
             }
         });
     }
 
     @Click
     void addElements() {
-        pageScrollerCustomView.addElements(3);
+        pageScrollerCustomView.setMaxCount(5);
         numberPicker2.setMaxValue(pageScrollerCustomView.getNumberOfPages());
+        /*pageScrollerCustomView.addElements(3);
+        numberPicker2.setMaxValue(pageScrollerCustomView.getNumberOfPages());*/
     }
 
     @Click
     void deleteElements() {
-        pageScrollerCustomView.deleteElements(4);
+        /*pageScrollerCustomView.deleteElements(4);
+        numberPicker2.setMaxValue(pageScrollerCustomView.getNumberOfPages());*/
+        pageScrollerCustomView.setMaxCount(8);
         numberPicker2.setMaxValue(pageScrollerCustomView.getNumberOfPages());
     }
 
     @Click
     void deleteElementsList() {
-        List<Integer> numberList = Arrays.asList(3, 6);
+       /* List<Integer> numberList = Arrays.asList(3, 6);
         pageScrollerCustomView.deleteElementsList(numberList);
+        numberPicker2.setMaxValue(pageScrollerCustomView.getNumberOfPages());*/
+        pageScrollerCustomView.setMaxCount(11);
         numberPicker2.setMaxValue(pageScrollerCustomView.getNumberOfPages());
     }
 
