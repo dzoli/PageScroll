@@ -1,8 +1,13 @@
-package com.makaji.aleksej.pagescroller;
+package com.makaji.aleksej.pagescroller.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.makaji.aleksej.pagescroller.R;
+
+import org.androidannotations.annotations.EActivity;
+
+@EActivity(resName = "activity_main")
 public class MainActivity extends AppCompatActivity {
 
     @Override

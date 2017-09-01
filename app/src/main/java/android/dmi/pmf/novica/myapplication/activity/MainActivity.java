@@ -17,7 +17,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     @ViewById
-    public PageScrollerView pageScrollerCustomView;
+    public com.makaji.aleksej.pagescroller.PageScrollerView pageScrollerCustomView;
 
     @ViewById
     public NumberPicker numberPicker2;

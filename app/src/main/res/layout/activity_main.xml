@@ -8,12 +8,12 @@
     tools:context="android.dmi.pmf.novica.myapplication.activity.MainActivity">
 
 
-    <android.dmi.pmf.novica.myapplication.view.PageScrollerView_
+    <com.makaji.aleksej.pagescroller.PageScrollerView_
         android:id="@+id/pageScrollerCustomView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true">
-    </android.dmi.pmf.novica.myapplication.view.PageScrollerView_>
+    </com.makaji.aleksej.pagescroller.PageScrollerView_>
 
     <RelativeLayout
         android:layout_width="match_parent"
