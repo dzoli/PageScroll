@@ -1,12 +1,10 @@
-package android.dmi.pmf.novica.myapplication.view;
+package com.makaji.aleksej.pagescroller;
 
 import android.content.Context;
-import android.dmi.pmf.novica.myapplication.R;
-import android.dmi.pmf.novica.myapplication.adapter.PageScrollerAdapter;
+
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.util.Log;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,7 +13,6 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EViewGroup;
-import org.androidannotations.annotations.RootContext;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
@@ -26,7 +23,7 @@ import java.util.List;
  */
 
 
-@EViewGroup(R.layout.page_counter)
+@EViewGroup(resName = "page_counter")
 public class PageScrollerView extends RelativeLayout {
 
     @ViewById

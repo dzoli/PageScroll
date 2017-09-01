@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     @AfterViews
     void init() {
 
-        pageScrollerCustomView.init();
+       // pageScrollerCustomView.init();
         pageScrollerCustomView.setMaxCount(10);
 
         numberPicker2.setMaxValue(pageScrollerCustomView.getNumberOfPages());
