@@ -59,18 +59,24 @@ public class PageScrollerView extends RelativeLayout {
 
     public void setMaxCount(Integer maxPage) {
 
-        //TO-DO URADI AKO OBRISE SVE ELEMENTE
-
         //ako je nula (prvi put da se kreira lista)
-        if (itemList.size() == 0) {
+        if (itemList.size() == 0 || itemList.indexOf(0) == 0) {
+            itemList.clear();   //ako se nista ne slekejtuje, da mogu prikazati nulu
             for (int i = 1; i <= maxPage; i++) {
                 itemList.add(i);
             }
+
+            //ako je maxpage 0
+        } else if (maxPage == 0) {
+            itemList.clear();
+            itemList.add(0);
+            setCurrPage(0);
+
             //ako se vrsi dodavanje
-        } else if (maxPage > itemList.size()) {
+        }else if (maxPage > itemList.size()) {
             int numberElementsAdded = maxPage - itemList.size();
             for (int i = 1; i <= numberElementsAdded; i++) {
-                itemList.add(itemList.size());
+                itemList.add(itemList.size()+1);
             }
             setCurrPage(currentPage);
 
@@ -78,7 +84,6 @@ public class PageScrollerView extends RelativeLayout {
         } else if (maxPage < itemList.size()) {
             int numberElementsDeleted = itemList.size()-maxPage;
             itemList.subList(itemList.size() - numberElementsDeleted, itemList.size()).clear();
-            //setCurrPage(currentPage);
         }
 
         pageScrollerAdapter.setPagesNumber(itemList);

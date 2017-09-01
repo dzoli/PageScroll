@@ -25,7 +25,7 @@
             android:clickable="false"
             android:divider="@null"
             android:enabled="false"
-            android:fadingEdgeLength="45dp"
+            android:fadingEdgeLength="15dp"
             android:gravity="center"
             android:requiresFadingEdge="vertical"
             android:scrollbars="none" />

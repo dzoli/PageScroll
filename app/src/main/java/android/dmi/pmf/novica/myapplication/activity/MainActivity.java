@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Click
     void addElements() {
-        pageScrollerCustomView.setMaxCount(5);
+        pageScrollerCustomView.setMaxCount(0);
         numberPicker2.setMaxValue(pageScrollerCustomView.getNumberOfPages());
         /*pageScrollerCustomView.addElements(3);
         numberPicker2.setMaxValue(pageScrollerCustomView.getNumberOfPages());*/
