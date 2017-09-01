@@ -63,20 +63,20 @@ public class PageScrollerView extends RelativeLayout {
 
         //ako je nula (prvi put da se kreira lista)
         if (itemList.size() == 0) {
-            for (int i = 0; i <= maxPage+1; i++) {
+            for (int i = 1; i <= maxPage; i++) {
                 itemList.add(i);
             }
             //ako se vrsi dodavanje
-        } else if (maxPage > itemList.size()-2) {
-            int numberElementsAdded = maxPage - itemList.size()+2;
+        } else if (maxPage > itemList.size()) {
+            int numberElementsAdded = maxPage - itemList.size();
             for (int i = 1; i <= numberElementsAdded; i++) {
                 itemList.add(itemList.size());
             }
             setCurrPage(currentPage);
 
             //ako se vrsi brisanje (deselekcija)
-        } else if (maxPage < itemList.size()-2) {
-            int numberElementsDeleted = (itemList.size()-2)-maxPage;
+        } else if (maxPage < itemList.size()) {
+            int numberElementsDeleted = itemList.size()-maxPage;
             itemList.subList(itemList.size() - numberElementsDeleted, itemList.size()).clear();
             //setCurrPage(currentPage);
         }
@@ -95,7 +95,7 @@ public class PageScrollerView extends RelativeLayout {
     }
 
     public int getNumberOfPages(){
-        return itemList.size()-2;
+        return itemList.size();
     }
 
 
