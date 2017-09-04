@@ -87,7 +87,15 @@ public class PageScrollerView extends RelativeLayout {
         pageScrollerAdapter.setPagesNumber(itemList);
         currentPageListView.setAdapter(pageScrollerAdapter);
 
-        if (mHeightOfElementsAndTextSize!=null) {
+
+        //da moze biti bez custom attributa
+        if (mHeightOfElementsAndTextSize!= 0) {
+            //max da moze biti 120 a min 30
+            if (mHeightOfElementsAndTextSize>120) {
+                mHeightOfElementsAndTextSize = 120;
+            } else if (mHeightOfElementsAndTextSize < 30) {
+                mHeightOfElementsAndTextSize = 30;
+            }
             setmHeightOfElementsAndTextSize(mHeightOfElementsAndTextSize);
         }
         if (textColor!=null){
@@ -167,6 +175,7 @@ public class PageScrollerView extends RelativeLayout {
 
         LayoutParams paramsList = (LayoutParams) currentPageListView.getLayoutParams();
         paramsList.height = heightOfElementsAndTextSize*3;
+        paramsList.width = heightOfElementsAndTextSize/2 + heightOfElementsAndTextSize/2;
         currentPageListView.setFadingEdgeLength(heightOfElementsAndTextSize + heightOfElementsAndTextSize/2);
         currentPageListView.setLayoutParams(paramsList);
 
