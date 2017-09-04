@@ -1,1 +1,1 @@
-include ':app', ':pagescroller'
+include ':app', ':pagescroller', ':page4'

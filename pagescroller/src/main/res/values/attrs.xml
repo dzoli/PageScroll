@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PageScrollerView">
+        <attr name="heightOfElementsAndTextSize" format="integer"/>
+        <attr name="textColor" format="string"/>
+    </declare-styleable>
+</resources>

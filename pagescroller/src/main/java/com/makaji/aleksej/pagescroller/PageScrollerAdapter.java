@@ -2,12 +2,14 @@ package com.makaji.aleksej.pagescroller;
 
 import android.content.Context;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
+import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,12 @@ public class PageScrollerAdapter extends BaseAdapter {
 
     @RootContext
     Context context;
+
+    NumberItemView numberItemView;
+
+    public Integer heightOfElementsAndTextSize;
+
+    public Integer colorCode;
 
     @Override
     public int getCount() {
@@ -44,6 +52,13 @@ public class PageScrollerAdapter extends BaseAdapter {
         final NumberItemView numberItemView;
         if (convertView == null) {
             numberItemView = NumberItemView_.build(context);
+            if (heightOfElementsAndTextSize!=null) {
+                numberItemView.setHeightOfElementsAndTextSize(heightOfElementsAndTextSize);
+            }
+            if (colorCode!=null) {
+                numberItemView.setTextColor(colorCode);
+            }
+
         } else {
             numberItemView = (NumberItemView) convertView;
         }
@@ -61,4 +76,14 @@ public class PageScrollerAdapter extends BaseAdapter {
     public List<Integer> getDataItems(){
         return dataItems;
     }
+
+    public void setHeightOfElementsAndTextSize(Integer heightOfElementsAndTextSize) {
+        this.heightOfElementsAndTextSize = heightOfElementsAndTextSize;
+    }
+
+    public void setTextColor(Integer colorCode) {
+        this.colorCode = colorCode;
+    }
+
+
 }

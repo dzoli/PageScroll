@@ -1,8 +1,10 @@
 package android.dmi.pmf.novica.myapplication.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.dmi.pmf.novica.myapplication.R;
 import android.dmi.pmf.novica.myapplication.adapter.PageScrollerAdapter;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +46,21 @@ public class PageScrollerView extends RelativeLayout {
 
     public PageScrollerView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+      /*  TypedArray a=getContext().obtainStyledAttributes(
+                attrs,
+                R.styleable.MyCustomView);
+
+        //Use a
+        Log.i("test",a.getString(
+                R.styleable.MyCustomView_android_text));
+        Log.i("test",""+a.getColor(
+                R.styleable.MyCustomView_android_textColor, Color.BLACK));
+        Log.i("test",a.getString(
+                R.styleable.MyCustomView_extraInformation));
+
+        //Don't forget this
+        a.recycle();*/
     }
 
     @AfterViews
