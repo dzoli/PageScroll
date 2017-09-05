@@ -5,27 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="android.dmi.pmf.novica.myapplication.activity.MainActivity"
-    tools:ignore="missingPrefix"
     >
 
 
-    <android.dmi.pmf.novica.myapplication.view.PageScrollerView_
-        android:id="@+id/pageScrollerCustomView"
-        android:name="MyFragment"
+    <com.makaji.aleksej.pagescroller.PageScrollerView_
+        android:id="@+id/pageScrollerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-
-
-       >
-    </android.dmi.pmf.novica.myapplication.view.PageScrollerView_>
+        >
+    </com.makaji.aleksej.pagescroller.PageScrollerView_>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        >
+        android:layout_height="wrap_content">
 
         <NumberPicker
             android:id="@+id/numberPicker2"
@@ -36,12 +28,10 @@
     </RelativeLayout>
 
     <Button
-
         android:id="@+id/addElements"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add 3 elements"
-       />
+        android:text="Add 3 elements" />
 
     <Button
         android:id="@+id/deleteElements"

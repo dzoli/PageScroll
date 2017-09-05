@@ -4,11 +4,14 @@ import android.content.Context;
 
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,7 +46,6 @@ public class PageScrollerView extends RelativeLayout {
 
     Integer currentPage = 0;
 
-
     @ViewById
     public TextView page;
 
@@ -77,17 +79,6 @@ public class PageScrollerView extends RelativeLayout {
         View footerAndHeaderView = ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                 .inflate(R.layout.page_scroller_view_header_and_foother_view, null, false);
 
-        //header and footer for setting custom attribute
-        footerAndHeaderView.setLayoutParams(new ListView.LayoutParams(LayoutParams.MATCH_PARENT,mHeightOfElementsAndTextSize));
-
-        currentPageListView.addFooterView(footerAndHeaderView);
-        currentPageListView.addHeaderView(footerAndHeaderView);
-
-        currentPageListView.setEnabled(false);
-        pageScrollerAdapter.setPagesNumber(itemList);
-        currentPageListView.setAdapter(pageScrollerAdapter);
-
-
         //da moze biti bez custom attributa
         if (mHeightOfElementsAndTextSize!= 0) {
             //max da moze biti 120 a min 30
@@ -97,10 +88,21 @@ public class PageScrollerView extends RelativeLayout {
                 mHeightOfElementsAndTextSize = 30;
             }
             setmHeightOfElementsAndTextSize(mHeightOfElementsAndTextSize);
+
+            //header and footer for setting custom attribute
+            footerAndHeaderView.setLayoutParams(new ListView.LayoutParams(LayoutParams.MATCH_PARENT,mHeightOfElementsAndTextSize));
         }
         if (textColor!=null){
             setTextColor(Color.parseColor(textColor));
         }
+
+        currentPageListView.addFooterView(footerAndHeaderView);
+        currentPageListView.addHeaderView(footerAndHeaderView);
+
+        currentPageListView.setEnabled(false);
+        pageScrollerAdapter.setPagesNumber(itemList);
+        currentPageListView.setAdapter(pageScrollerAdapter);
+
     }
 
     public void setMaxCount(Integer maxPage) {
@@ -136,21 +138,24 @@ public class PageScrollerView extends RelativeLayout {
         maxPages.setText(maxPage.toString());
     }
 
-    @Background
+    //@Background
     public void setCurrPage(final Integer currPage) {
         int h1 = currentPageListView.getHeight();
         int h2 = maxPages.getHeight();
 
+        Log.d("PAGE", "curr Page" + currPage);
         currentPage = currPage;
-        currentPageListView.smoothScrollToPositionFromTop(currPage, h1 / 2 - h2 / 2, 200);
+
+        if (pageScrollerAdapter.getCount() == 2) {
+            //only if there are 2 elements in a list, to remove scrolling bug
+            smoothScrollToPosition(currentPageListView, currPage - 1);
+        } else {
+            currentPageListView.smoothScrollToPositionFromTop(currPage, h1 / 2 - h2 / 2, 200);
+        }
     }
 
     public int getNumberOfPages(){
         return itemList.size();
-    }
-
-    public Integer getmHeightOfElementsAndTextSize() {
-        return mHeightOfElementsAndTextSize;
     }
 
     public void setmHeightOfElementsAndTextSize(Integer heightOfElementsAndTextSize) {
@@ -190,5 +195,52 @@ public class PageScrollerView extends RelativeLayout {
         page.setTextColor(colorCode);
         slash.setTextColor(colorCode);
         pageScrollerAdapter.setTextColor(colorCode);
+    }
+
+    //only if there are 2 elements in a list, to remove scrolling bug
+    public static void smoothScrollToPosition(final AbsListView view, final int position) {
+        View child = getChildAtPosition(view, position);
+        // There's no need to scroll if child is already at top or view is already scrolled to its end
+        if ((child != null) && ((child.getTop() == 0) || ((child.getTop() > 0) && !view.canScrollVertically(1)))) {
+            return;
+        }
+
+        view.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(final AbsListView view, final int scrollState) {
+                if (scrollState == SCROLL_STATE_IDLE) {
+                    view.setOnScrollListener(null);
+
+                    // Fix for scrolling bug
+                    new Handler().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            view.setSelection(position);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onScroll(final AbsListView view, final int firstVisibleItem, final int visibleItemCount,
+                                 final int totalItemCount) { }
+        });
+
+        // Perform scrolling to position
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                view.smoothScrollToPositionFromTop(position, 0, 350);
+            }
+        });
+    }
+
+    public static View getChildAtPosition(final AdapterView view, final int position) {
+        final int index = position - view.getFirstVisiblePosition();
+        if ((index >= 0) && (index < view.getChildCount())) {
+            return view.getChildAt(index);
+        } else {
+            return null;
+        }
     }
 }

@@ -13,14 +13,14 @@
             android:layout_height="@dimen/height_text_elements"
             android:layout_marginTop="@dimen/margins"
             android:gravity="center"
-            android:text="Page"
+            android:text="page"
             android:textSize="@dimen/text" />
 
 
         <ListView
             android:id="@+id/currentPageListView"
             android:layout_width="30dp"
-            android:layout_height="60dp"
+            android:layout_height="75dp"
             android:layout_marginLeft="11dp"
             android:layout_toRightOf="@+id/page"
             android:clickable="false"
