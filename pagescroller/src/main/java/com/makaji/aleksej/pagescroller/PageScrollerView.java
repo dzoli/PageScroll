@@ -165,7 +165,9 @@ public class PageScrollerView extends LinearLayout {
         } else if (maxPage < itemList.size()) {
             int numberElementsDeleted = itemList.size() - maxPage;
             itemList.subList(itemList.size() - numberElementsDeleted, itemList.size()).clear();
-            setCurrPage(maxPage);
+            if (currentPage < itemList.size()) {
+                setCurrPage(currentPage);
+            }
         }
 
         //if list consist 2 elements, add one more element to fix scrolling bug (later we remove it)
@@ -175,6 +177,10 @@ public class PageScrollerView extends LinearLayout {
             if (currentPage > 2) {
                 setCurrPage(2);
             }
+        }
+
+        if (maxPage == 1) {
+            setCurrPage(1);
         }
 
         pageScrollerAdapter.setPagesNumber(itemList);
@@ -208,6 +214,7 @@ public class PageScrollerView extends LinearLayout {
         return itemList.size();
     }
 
+    //set height and text size by custom attribute
     public void setmHeightOfElementsAndTextSize(Integer heightOfElementsAndTextSize) {
 
         LayoutParams params = (LayoutParams) maxPages.getLayoutParams();
@@ -240,6 +247,7 @@ public class PageScrollerView extends LinearLayout {
         requestLayout();
     }
 
+    //set color of elements by custom attribute
     public void setTextColor(Integer colorCode) {
         maxPages.setTextColor(colorCode);
         page.setTextColor(colorCode);

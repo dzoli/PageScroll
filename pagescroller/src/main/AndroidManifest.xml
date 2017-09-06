@@ -3,14 +3,9 @@
     package="com.makaji.aleksej.pagescroller">
 
     <application
-        android:supportsRtl="true" android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity_">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
