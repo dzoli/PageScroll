@@ -18,7 +18,7 @@ import org.androidannotations.annotations.ViewById;
 public class NumberItemView extends LinearLayout {
 
     @ViewById
-    public TextView numberTv;
+    TextView numberTv;
 
     public NumberItemView(Context context) {
         super(context);

@@ -34,25 +34,26 @@ import java.util.List;
 public class PageScrollerView extends RelativeLayout {
 
     @ViewById
-    public ListView currentPageListView;
+    ListView currentPageListView;
 
     @ViewById
-    public TextView maxPages;
+    TextView maxPages;
 
     @Bean
-    public PageScrollerAdapter pageScrollerAdapter;
+    PageScrollerAdapter pageScrollerAdapter;
+
+    @ViewById
+    TextView page;
+
+    @ViewById
+    TextView slash;
 
     List<Integer> itemList = new ArrayList<>();
 
     Integer currentPage = 0;
 
-    @ViewById
-    public TextView page;
-
-    @ViewById
-    public TextView slash;
-
     String textColor;
+    String textChange;
     Integer mHeightOfElementsAndTextSize;
 
     public PageScrollerView(Context context, AttributeSet attrs) {
@@ -66,6 +67,7 @@ public class PageScrollerView extends RelativeLayout {
 
             textColor = a.getString(R.styleable.PageScrollerView_textColor);
             mHeightOfElementsAndTextSize = a.getInteger(R.styleable.PageScrollerView_heightOfElementsAndTextSize, 0);
+            textChange = a.getString(R.styleable.PageScrollerView_textChange);
 
         } finally {
             a.recycle();
@@ -92,8 +94,14 @@ public class PageScrollerView extends RelativeLayout {
             //header and footer for setting custom attribute
             footerAndHeaderView.setLayoutParams(new ListView.LayoutParams(LayoutParams.MATCH_PARENT,mHeightOfElementsAndTextSize));
         }
+
         if (textColor!=null){
             setTextColor(Color.parseColor(textColor));
+        }
+
+        //If custom attribute for changing text is set, accept changes
+        if (textChange!=null) {
+            page.setText(textChange);
         }
 
         currentPageListView.addFooterView(footerAndHeaderView);
@@ -139,7 +147,7 @@ public class PageScrollerView extends RelativeLayout {
     }
 
     //@Background
-    public void setCurrPage(final Integer currPage) {
+    public void setCurrPage(Integer currPage) {
         int h1 = currentPageListView.getHeight();
         int h2 = maxPages.getHeight();
 

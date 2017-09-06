@@ -3,5 +3,6 @@
     <declare-styleable name="PageScrollerView">
         <attr name="heightOfElementsAndTextSize" format="integer"/>
         <attr name="textColor" format="string"/>
+        <attr name="textChange" format="string"/>
     </declare-styleable>
 </resources>

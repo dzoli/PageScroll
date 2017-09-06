@@ -66,14 +66,6 @@ public class PageScrollerAdapter extends BaseAdapter {
 
         numberItemView.bind((Integer) getItem(position));
 
-
-       /* if ( position == 2 && getCount() == 2) {
-            numberItemView.setVisibility(View.GONE);
-        } else {
-            numberItemView.setVisibility(View.VISIBLE);
-        }*/
-
-
         return numberItemView;
     }
 
