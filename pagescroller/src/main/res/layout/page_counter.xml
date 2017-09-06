@@ -23,12 +23,10 @@
             android:layout_height="75dp"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:background="@color/colorAccent"
             android:clickable="false"
             android:divider="@null"
             android:enabled="false"
             android:fadingEdgeLength="25dp"
-
             android:requiresFadingEdge="vertical"
             android:scrollbars="none" />
 

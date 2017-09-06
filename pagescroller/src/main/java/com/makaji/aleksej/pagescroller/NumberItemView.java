@@ -37,7 +37,8 @@ public class NumberItemView extends LinearLayout {
     }
 
     public void setHeightOfElementsAndTextSize(Integer heightOfElementsAndTextSize) {
-        Log.d("HEIGH", "HEIGH NumberItemView: " + heightOfElementsAndTextSize);
+
+        //set hight of element in item list with custom attribute
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) numberTv.getLayoutParams();
         params.height = heightOfElementsAndTextSize;
         numberTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, heightOfElementsAndTextSize/4);

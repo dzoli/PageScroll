@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     void init() {
 
         // pageScrollerCustomView.init();
-        pageScrollerView.setMaxCount(120);
+        pageScrollerView.setMaxCount(12);
 
         numberPicker2.setMaxValue(pageScrollerView.getNumberOfPages());
         numberPicker2.setMinValue(1);
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     void deleteElements() {
         /*pageScrollerCustomView.deleteElements(4);
         numberPicker2.setMaxValue(pageScrollerCustomView.getNumberOfPages());*/
-        pageScrollerView.setMaxCount(8);
+        pageScrollerView.setMaxCount(1);
         numberPicker2.setMaxValue(pageScrollerView.getNumberOfPages());
         //pageScrollerView.setmHeightOfElementsAndTextSize(40);
     }
@@ -75,9 +75,15 @@ public class MainActivity extends AppCompatActivity {
        /* List<Integer> numberList = Arrays.asList(3, 6);
         pageScrollerCustomView.deleteElementsList(numberList);
         numberPicker2.setMaxValue(pageScrollerCustomView.getNumberOfPages());*/
-        pageScrollerView.setMaxCount(323);
+        pageScrollerView.setMaxCount(3);
         numberPicker2.setMaxValue(pageScrollerView.getNumberOfPages());
         //pageScrollerView.setmHeightOfElementsAndTextSize(20);
+    }
+
+    @Click
+    void asd() {
+        pageScrollerView.setMaxCount(123);
+        numberPicker2.setMaxValue(pageScrollerView.getNumberOfPages());
     }
 
 }
