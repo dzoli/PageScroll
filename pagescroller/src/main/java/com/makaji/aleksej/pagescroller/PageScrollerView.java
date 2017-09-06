@@ -4,6 +4,8 @@ import android.content.Context;
 
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,7 +34,7 @@ import java.util.List;
 
 
 @EViewGroup(resName = "page_counter")
-public class PageScrollerView extends RelativeLayout {
+public class PageScrollerView extends LinearLayout {
 
     @ViewById
     ListView currentPageListView;
@@ -48,9 +51,12 @@ public class PageScrollerView extends RelativeLayout {
     @ViewById
     TextView slash;
 
+    NumberItemView numberItemView;
+
     List<Integer> itemList = new ArrayList<>();
 
     Integer currentPage = 0;
+    Integer maxPageBefore = 0;
 
     String textColor;
     String textChange;
@@ -115,6 +121,40 @@ public class PageScrollerView extends RelativeLayout {
 
     public void setMaxCount(Integer maxPage) {
 
+        if (maxPageBefore == 2) {
+            itemList.remove(2);
+            maxPageBefore = maxPage;
+        }
+
+        //Count how many digits have param integer maxPage
+
+        //Get width of slash characther
+        Rect bounds = new Rect();
+        Paint textPaint = slash.getPaint();
+        textPaint.getTextBounds(slash.getText().toString(), 0, slash.getText().length(), bounds);
+        int widthOfOneChar = bounds.width();
+        Log.d("setMaxCount", "text width: " + widthOfOneChar);
+
+        LayoutParams paramsList = (LayoutParams) currentPageListView.getLayoutParams();
+        if (currentPage > maxPage) {
+            Log.d("ASD", "curr>>>>itemsize");
+            int nDigitsMax = (int) (Math.floor(Math.log10(Math.abs(maxPage))) + 1);
+            paramsList.width = (widthOfOneChar+(widthOfOneChar/5)+widthOfOneChar/3)*(nDigitsMax+1);
+        } else if (currentPage == 0) {
+            paramsList.width = (widthOfOneChar+(widthOfOneChar/5)+widthOfOneChar/3)*(1+1);
+        } else {
+                Log.d("ASD", "Else");
+                int nDigitsCurrentPage = (int) (Math.floor(Math.log10(Math.abs(currentPage))) + 1);
+                paramsList.width = (widthOfOneChar+(widthOfOneChar/5)+widthOfOneChar/3)*(nDigitsCurrentPage+1);
+        }
+        currentPageListView.setLayoutParams(paramsList);
+
+        invalidate();
+        requestLayout();
+
+
+
+
         //ako je nula (prvi put da se kreira lista)
         if (itemList.size() == 0 || itemList.indexOf(0) == 0) {
             itemList.clear();   //ako se nista ne slekejtuje, da mogu prikazati nulu
@@ -129,21 +169,32 @@ public class PageScrollerView extends RelativeLayout {
             setCurrPage(0);
 
             //ako se vrsi dodavanje
-        }else if (maxPage > itemList.size()) {
+        } else if (maxPage > itemList.size()) {
             int numberElementsAdded = maxPage - itemList.size();
             for (int i = 1; i <= numberElementsAdded; i++) {
-                itemList.add(itemList.size()+1);
+                itemList.add(itemList.size() + 1);
             }
             setCurrPage(currentPage);
 
             //ako se vrsi brisanje (deselekcija)
         } else if (maxPage < itemList.size()) {
-            int numberElementsDeleted = itemList.size()-maxPage;
+            int numberElementsDeleted = itemList.size() - maxPage;
             itemList.subList(itemList.size() - numberElementsDeleted, itemList.size()).clear();
         }
 
+        if (maxPage == 2) {
+            itemList.add(-1);
+            maxPageBefore = 2;
+            if (currentPage > 2) {
+                setCurrPage(2);
+            }
+        }
+
+
         pageScrollerAdapter.setPagesNumber(itemList);
         maxPages.setText(maxPage.toString());
+        currentPageListView.setLayoutParams(paramsList);
+
     }
 
     //@Background
@@ -154,12 +205,25 @@ public class PageScrollerView extends RelativeLayout {
         Log.d("PAGE", "curr Page" + currPage);
         currentPage = currPage;
 
-        if (pageScrollerAdapter.getCount() == 2) {
-            //only if there are 2 elements in a list, to remove scrolling bug
-            smoothScrollToPosition(currentPageListView, currPage - 1);
-        } else {
-            currentPageListView.smoothScrollToPositionFromTop(currPage, h1 / 2 - h2 / 2, 200);
-        }
+        //Count how many digits have param integer maxPage
+        int nDigits = (int) (Math.floor(Math.log10(Math.abs(currPage))) + 1);
+        Log.d("setMaxCount", "digits: " + nDigits);
+
+        //Get width of slash characther
+        Rect bounds = new Rect();
+        Paint textPaint = slash.getPaint();
+        textPaint.getTextBounds(slash.getText().toString(), 0, slash.getText().length(), bounds);
+        int widthOfOneChar = bounds.width();
+        Log.d("setMaxCount", "text width: " + widthOfOneChar);
+
+        LayoutParams paramsList = (LayoutParams) currentPageListView.getLayoutParams();
+        paramsList.width = (widthOfOneChar+(widthOfOneChar/5)+widthOfOneChar/3)*(nDigits+1);
+        currentPageListView.setLayoutParams(paramsList);
+
+
+
+        currentPageListView.smoothScrollToPositionFromTop(currPage, h1 / 2 - h2 / 2, 200);
+
     }
 
     public int getNumberOfPages(){
@@ -205,50 +269,4 @@ public class PageScrollerView extends RelativeLayout {
         pageScrollerAdapter.setTextColor(colorCode);
     }
 
-    //only if there are 2 elements in a list, to remove scrolling bug
-    public static void smoothScrollToPosition(final AbsListView view, final int position) {
-        View child = getChildAtPosition(view, position);
-        // There's no need to scroll if child is already at top or view is already scrolled to its end
-        if ((child != null) && ((child.getTop() == 0) || ((child.getTop() > 0) && !view.canScrollVertically(1)))) {
-            return;
-        }
-
-        view.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(final AbsListView view, final int scrollState) {
-                if (scrollState == SCROLL_STATE_IDLE) {
-                    view.setOnScrollListener(null);
-
-                    // Fix for scrolling bug
-                    new Handler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            view.setSelection(position);
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onScroll(final AbsListView view, final int firstVisibleItem, final int visibleItemCount,
-                                 final int totalItemCount) { }
-        });
-
-        // Perform scrolling to position
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                view.smoothScrollToPositionFromTop(position, 0, 350);
-            }
-        });
-    }
-
-    public static View getChildAtPosition(final AdapterView view, final int position) {
-        final int index = position - view.getFirstVisiblePosition();
-        if ((index >= 0) && (index < view.getChildCount())) {
-            return view.getChildAt(index);
-        } else {
-            return null;
-        }
-    }
 }
