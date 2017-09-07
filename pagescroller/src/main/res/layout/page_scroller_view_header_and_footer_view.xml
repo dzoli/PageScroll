@@ -4,9 +4,9 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/header_and_footherTV"
+        android:id="@+id/header_and_footerTV"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/height_text_elements"
-        android:text=" " />
+        android:text="@string/space" />
 
 </LinearLayout>

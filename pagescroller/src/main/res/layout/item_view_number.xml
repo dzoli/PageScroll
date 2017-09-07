@@ -11,6 +11,7 @@
         android:layout_height="@dimen/height_text_elements"
         android:layout_centerInParent="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:gravity="center"
         android:textSize="@dimen/text" />
 

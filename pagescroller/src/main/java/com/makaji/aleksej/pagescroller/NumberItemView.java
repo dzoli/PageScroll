@@ -1,7 +1,6 @@
 package com.makaji.aleksej.pagescroller;
 
 import android.content.Context;
-import android.util.Log;
 import android.util.TypedValue;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -10,9 +9,7 @@ import android.widget.TextView;
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 
-/**
- * Created by Aleksej on 9/1/2017.
- */
+import java.util.Locale;
 
 @EViewGroup(resName = "item_view_number")
 public class NumberItemView extends LinearLayout {
@@ -25,20 +22,12 @@ public class NumberItemView extends LinearLayout {
     }
 
     public void bind(Integer num){
-        numberTv.setText(num.toString());
-    }
-
-    public int getNumber(){
-        return Integer.parseInt(numberTv.getText().toString());
-    }
-
-    public void setNumber(String number) {
-        numberTv.setText(number);
+        numberTv.setText(String.format(Locale.getDefault(), "%d", num));
     }
 
     public void setHeightOfElementsAndTextSize(Integer heightOfElementsAndTextSize) {
 
-        //set hight of element in item list with custom attribute
+        //set height of element in item list with custom attribute
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) numberTv.getLayoutParams();
         params.height = heightOfElementsAndTextSize;
         numberTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, heightOfElementsAndTextSize/4);

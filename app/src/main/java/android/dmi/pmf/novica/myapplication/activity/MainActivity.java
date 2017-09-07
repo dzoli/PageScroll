@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         // pageScrollerCustomView.init();
         pageScrollerView.setMaxCount(12);
 
-        numberPicker2.setMaxValue(pageScrollerView.getNumberOfPages());
+        numberPicker2.setMaxValue(12);
         numberPicker2.setMinValue(1);
         numberPicker2.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
@@ -44,46 +44,24 @@ public class MainActivity extends AppCompatActivity {
     @Click
     void addElements() {
         pageScrollerView.setMaxCount(2);
-        numberPicker2.setMaxValue(pageScrollerView.getNumberOfPages());
-        /*pageScrollerCustomView.addElements(3);
-        numberPicker2.setMaxValue(pageScrollerCustomView.getNumberOfPages());*/
-       // pageScrollerView.setmHeightOfElementsAndTextSize(60);
-
-       /* Integer testInt = 100;
-        float pixelSize;
-
-        Log.d("H", "Height INT:" + testInt);
-
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        pixelSize = (int)testInt * dm.scaledDensity;
-
-        Log.d("H", "pixelSize:" + pixelSize);*/
+        numberPicker2.setMaxValue(2);
     }
 
     @Click
     void deleteElements() {
-        /*pageScrollerCustomView.deleteElements(4);
-        numberPicker2.setMaxValue(pageScrollerCustomView.getNumberOfPages());*/
         pageScrollerView.setMaxCount(1);
-        numberPicker2.setMaxValue(pageScrollerView.getNumberOfPages());
-        //pageScrollerView.setmHeightOfElementsAndTextSize(40);
+        numberPicker2.setMaxValue(1);
     }
 
     @Click
     void deleteElementsList() {
-       /* List<Integer> numberList = Arrays.asList(3, 6);
-        pageScrollerCustomView.deleteElementsList(numberList);
-        numberPicker2.setMaxValue(pageScrollerCustomView.getNumberOfPages());*/
         pageScrollerView.setMaxCount(3);
-        numberPicker2.setMaxValue(pageScrollerView.getNumberOfPages());
-        //pageScrollerView.setmHeightOfElementsAndTextSize(20);
+        numberPicker2.setMaxValue(3);
     }
 
     @Click
     void asd() {
         pageScrollerView.setMaxCount(123);
-        numberPicker2.setMaxValue(pageScrollerView.getNumberOfPages());
+        numberPicker2.setMaxValue(123);
     }
-
 }

@@ -1,22 +1,15 @@
 package com.makaji.aleksej.pagescroller;
 
 import android.content.Context;
-
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
-import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by Novica on 8/28/2017.
- */
 
 @EBean
 public class PageScrollerAdapter extends BaseAdapter {
@@ -26,9 +19,9 @@ public class PageScrollerAdapter extends BaseAdapter {
     @RootContext
     Context context;
 
-    public Integer heightOfElementsAndTextSize;
+    private Integer heightOfElementsAndTextSize;
 
-    public Integer colorCode;
+    private Integer colorCode;
 
     @Override
     public int getCount() {
@@ -50,10 +43,10 @@ public class PageScrollerAdapter extends BaseAdapter {
         final NumberItemView numberItemView;
         if (convertView == null) {
             numberItemView = NumberItemView_.build(context);
-            if (heightOfElementsAndTextSize!=null) {
+            if (heightOfElementsAndTextSize != null) {
                 numberItemView.setHeightOfElementsAndTextSize(heightOfElementsAndTextSize);
             }
-            if (colorCode!=null) {
+            if (colorCode != null) {
                 numberItemView.setTextColor(colorCode);
             }
 
@@ -65,7 +58,7 @@ public class PageScrollerAdapter extends BaseAdapter {
         numberItemView.bind((Integer) getItem(position));
 
         //When we have 2 elements in list, to hide 3rd added element
-        if (dataItems.size()==3 && position == 2 && dataItems.get(2).equals(-1)) {
+        if (dataItems.size() == 3 && position == 2 && dataItems.get(2).equals(-1)) {
             numberItemView.setVisibility(View.GONE);
         } else {
             numberItemView.setVisibility(View.VISIBLE);
@@ -79,10 +72,6 @@ public class PageScrollerAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public List<Integer> getDataItems(){
-        return dataItems;
-    }
-
     public void setHeightOfElementsAndTextSize(Integer heightOfElementsAndTextSize) {
         this.heightOfElementsAndTextSize = heightOfElementsAndTextSize;
     }
@@ -90,6 +79,5 @@ public class PageScrollerAdapter extends BaseAdapter {
     public void setTextColor(Integer colorCode) {
         this.colorCode = colorCode;
     }
-
 
 }
