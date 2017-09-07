@@ -4,10 +4,10 @@
 To get a Git project into your build:
 - Step 1. Add the JitPack repository to your build file
 Add it in your root build.gradle at the end of repositories:
-   ![alt text](screenshots/screenshots/project%20build.gradle.JPG "project build.gradle")
+   ![alt text](PageScroll/screenshots/project build.gradle.JPG "project build.gradle")
   
 - Step 2. Add the dependency
-  	![alt text](screenshots/screenshots/app%20build.gradle.JPG "app build.gradle")
+  	![alt text](PageScroll/screenshots/app build.gradle.JPG "app build.gradle")
 	  
 ## Custom attributes:
 
