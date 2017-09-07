@@ -1,6 +1,10 @@
 # PageScroll
 
-# How to install
+## Pre-requisites
+- Android SDK 25
+- Android Build Tools v25.0.1
+
+## How to install
 To get a Git project into your build: 
 - Step 1. Add the JitPack repository to your build file
 Add it in your root build.gradle at the end of repositories: </br>
@@ -47,4 +51,5 @@ Add custom view into your layout
         custom:heightOfElementsAndTextSize="60">
 </com.makaji.aleksej.pagescroller.PageScrollerView_>
 ```
-	  
+## License
+This project is licensed under the MIT License - see the LICENSE.md file for details
