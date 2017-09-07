@@ -1,13 +1,13 @@
 # PageScroll
 
 # How to install
-To get a Git project into your build:
+To get a Git project into your build: 
 - Step 1. Add the JitPack repository to your build file
-Add it in your root build.gradle at the end of repositories:
-   ![alt text](PageScroll/screenshots/project build.gradle.JPG "project build.gradle")
+Add it in your root build.gradle at the end of repositories: </br>
+   ![alt text](https://github.com/dzoli/PageScroll/blob/master/screenshots/project-buld.gradle.JPG?raw=true)
   
-- Step 2. Add the dependency
-  	![alt text](PageScroll/screenshots/app build.gradle.JPG "app build.gradle")
+- Step 2. Add the dependency </br>
+  	![alt text](https://github.com/dzoli/PageScroll/blob/master/screenshots/app%20build.gradle.JPG?raw=true)
 	  
 ## Custom attributes:
 
