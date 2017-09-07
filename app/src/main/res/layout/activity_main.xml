@@ -12,10 +12,11 @@
         android:id="@+id/pageScrollerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        custom:textColor="BLUE"
-        custom:heightOfElementsAndTextSize="60"
-        custom:textChange="Page"
-        >
+        custom:heightOfElementsAndTextSize="40"
+        custom:textChange="New text"
+        custom:textColor="RED"
+        custom:numbersFading="30"
+        custom:animationSpeed="200">
     </com.makaji.aleksej.pagescroller.PageScrollerView_>
 
     <RelativeLayout

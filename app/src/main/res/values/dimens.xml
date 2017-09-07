@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="text">12sp</dimen>
-    <dimen name="margins">25dp</dimen>
-    <dimen name="height_text_elements">25dp</dimen>
-</resources>

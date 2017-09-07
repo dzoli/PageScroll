@@ -51,6 +51,8 @@ public class PageScrollerView extends LinearLayout {
     private String textColor;
     private String textChange;
     private Integer mHeightOfElementsAndTextSize;
+    private Integer numbersFading;
+    private Integer animationSpeed;
 
     public PageScrollerView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -64,6 +66,8 @@ public class PageScrollerView extends LinearLayout {
             textColor = a.getString(R.styleable.PageScrollerView_textColor);
             mHeightOfElementsAndTextSize = a.getInteger(R.styleable.PageScrollerView_heightOfElementsAndTextSize, 0);
             textChange = a.getString(R.styleable.PageScrollerView_textChange);
+            numbersFading = a.getInteger(R.styleable.PageScrollerView_numbersFading, 0);
+            animationSpeed = a.getInteger(R.styleable.PageScrollerView_animationSpeed, 200);
         } finally {
             a.recycle();
         }
@@ -79,15 +83,22 @@ public class PageScrollerView extends LinearLayout {
         //If custom attribute for height and text size is set, accept changes
         if (mHeightOfElementsAndTextSize!= 0) {
             //max height can be 120 while min 30
-            if (mHeightOfElementsAndTextSize>120) {
-                mHeightOfElementsAndTextSize = 120;
-            } else if (mHeightOfElementsAndTextSize < 30) {
-                mHeightOfElementsAndTextSize = 30;
+            if (mHeightOfElementsAndTextSize>100) {
+                mHeightOfElementsAndTextSize = 100;
+            } else if (mHeightOfElementsAndTextSize < 35) {
+                mHeightOfElementsAndTextSize =35;
             }
             setHeightOfElementsAndTextSize(mHeightOfElementsAndTextSize);
 
             //set height of footer and header with custom attributes
             footerAndHeaderView.setLayoutParams(new ListView.LayoutParams(LayoutParams.MATCH_PARENT,mHeightOfElementsAndTextSize));
+        }
+
+        //Limits for custom animation speed attribute
+        if (animationSpeed>350) {
+            animationSpeed = 350;
+        } else if (animationSpeed < 150) {
+            animationSpeed = 150;
         }
 
         //If custom attribute for color is set, accept changes
@@ -98,6 +109,11 @@ public class PageScrollerView extends LinearLayout {
         //If custom attribute for changing text is set, accept changes
         if (textChange!=null) {
             page.setText(textChange);
+        }
+
+        //If custom attribute for changing fade is set, accept changes
+        if (numbersFading!=0) {
+            currentPageListView.setFadingEdgeLength(numbersFading);
         }
 
         currentPageListView.addFooterView(footerAndHeaderView);
@@ -127,53 +143,22 @@ public class PageScrollerView extends LinearLayout {
         }
         currentPageListView.setLayoutParams(paramsList);
 
-        //if list consisted 2 items before, we remove 1 element which we added before, to fix scrolling bug
-        if (maxPageBefore == 2) {
-            itemList.remove(2);
-            maxPageBefore = maxPage;
-        }
-
-        //If item list was zero, add items (initialize list)
-        if (itemList.size() == 0 || itemList.indexOf(0) == 0) {
-            itemList.clear();   //
-            for (int i = 1; i <= maxPage; i++) {
+        itemList.clear();
+        if (maxPage == 2) {
+            for (int i = 1; i <= 2; i++) {
                 itemList.add(i);
             }
-
-            //If nothing is selected, show 0 pages
-        } else if (maxPage == 0) {
-            itemList.clear();
-            itemList.add(0);
-            setCurrPage(0);
-
-            //Adding to list
-        } else if (maxPage > itemList.size()) {
-            int numberElementsAdded = maxPage - itemList.size();
-            for (int i = 1; i <= numberElementsAdded; i++) {
-                itemList.add(itemList.size() + 1);
-            }
-            setCurrPage(currentPage);
-
-            //Removing from list
-        } else if (maxPage < itemList.size()) {
-            int numberElementsDeleted = itemList.size() - maxPage;
-            itemList.subList(itemList.size() - numberElementsDeleted, itemList.size()).clear();
-            if (currentPage < itemList.size()) {
-                setCurrPage(currentPage);
-            }
-        }
-
-        //if list consist 2 elements, add one more element to fix scrolling bug (later we remove it)
-        if (maxPage == 2) {
             itemList.add(-1);
-            maxPageBefore = 2;
-            if (currentPage > 2) {
+            if (currentPage > maxPage){
                 setCurrPage(2);
             }
-        }
-
-        if (maxPage == 1) {
-            setCurrPage(1);
+        }else {
+            for (int i = 1; i <= maxPage ; i++) {
+                itemList.add(i);
+            }
+            if (maxPage == 1) {
+                setCurrPage(1);
+            }
         }
 
         pageScrollerAdapter.setPagesNumber(itemList);
@@ -199,7 +184,7 @@ public class PageScrollerView extends LinearLayout {
         currentPageListView.setLayoutParams(paramsList);
 
         //Scroll to requested item with animation
-        currentPageListView.smoothScrollToPositionFromTop(currPage, h1 / 2 - h2 / 2, 200);
+        currentPageListView.smoothScrollToPositionFromTop(currPage, h1 / 2 - h2 / 2, animationSpeed);
     }
 
     //set height and text size by custom attribute
@@ -208,25 +193,25 @@ public class PageScrollerView extends LinearLayout {
         LayoutParams params = (LayoutParams) maxPages.getLayoutParams();
         params.height = heightOfElementsAndTextSize;
         params.setMargins(0, heightOfElementsAndTextSize, 0, 0);
-        maxPages.setTextSize(TypedValue.COMPLEX_UNIT_SP, heightOfElementsAndTextSize/4);
+        maxPages.setTextSize(TypedValue.COMPLEX_UNIT_SP, heightOfElementsAndTextSize/3 + heightOfElementsAndTextSize/15);
         maxPages.setLayoutParams(params);
 
         LayoutParams paramsPage = (LayoutParams) page.getLayoutParams();
         paramsPage.height = heightOfElementsAndTextSize;
         paramsPage.setMargins(0, heightOfElementsAndTextSize, 0, 0);
-        page.setTextSize(TypedValue.COMPLEX_UNIT_SP, heightOfElementsAndTextSize/4);
+        page.setTextSize(TypedValue.COMPLEX_UNIT_SP, heightOfElementsAndTextSize/3 + heightOfElementsAndTextSize/15);
         page.setLayoutParams(paramsPage);
 
         LayoutParams paramsSlash = (LayoutParams) slash.getLayoutParams();
         paramsSlash.height = heightOfElementsAndTextSize;
         paramsSlash.setMargins(0, heightOfElementsAndTextSize, 0, 0);
-        slash.setTextSize(TypedValue.COMPLEX_UNIT_SP, heightOfElementsAndTextSize/4);
+        slash.setTextSize(TypedValue.COMPLEX_UNIT_SP, heightOfElementsAndTextSize/3 + heightOfElementsAndTextSize/15);
         slash.setLayoutParams(paramsSlash);
 
         LayoutParams paramsList = (LayoutParams) currentPageListView.getLayoutParams();
         paramsList.height = heightOfElementsAndTextSize*3;
-        paramsList.width = heightOfElementsAndTextSize/2 + heightOfElementsAndTextSize/2;
-        currentPageListView.setFadingEdgeLength(heightOfElementsAndTextSize + heightOfElementsAndTextSize/2);
+        paramsList.width = heightOfElementsAndTextSize/2 + heightOfElementsAndTextSize/3;
+        currentPageListView.setFadingEdgeLength(heightOfElementsAndTextSize + heightOfElementsAndTextSize/3 + heightOfElementsAndTextSize/10);
         currentPageListView.setLayoutParams(paramsList);
 
         pageScrollerAdapter.setHeightOfElementsAndTextSize(heightOfElementsAndTextSize);

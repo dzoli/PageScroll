@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <declare-styleable name="cross">
-        <attr name="android:color"/>
-        <attr name="page" format="string"/>
-
-    </declare-styleable>
-</resources>

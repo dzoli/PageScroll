@@ -4,5 +4,7 @@
         <attr name="heightOfElementsAndTextSize" format="integer"/>
         <attr name="textColor" format="string"/>
         <attr name="textChange" format="string"/>
+        <attr name="numbersFading" format="integer"/>
+        <attr name="animationSpeed" format="integer"/>
     </declare-styleable>
 </resources>
