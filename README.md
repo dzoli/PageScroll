@@ -4,10 +4,21 @@
 To get a Git project into your build: 
 - Step 1. Add the JitPack repository to your build file
 Add it in your root build.gradle at the end of repositories: </br>
-   ![alt text](https://github.com/dzoli/PageScroll/blob/master/screenshots/project-buld.gradle.JPG?raw=true)
+```
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
+	}
+}
+```
   
 - Step 2. Add the dependency </br>
-  	![alt text](https://github.com/dzoli/PageScroll/blob/master/screenshots/app%20build.gradle.JPG?raw=true)
+```
+dependencies {
+	compile 'com.github.dzoli:PageScroll:0.1.0'
+}	
+```
 	  
 ## Custom attributes:
 
