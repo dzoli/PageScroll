@@ -36,8 +36,8 @@ dependencies {
 
 | Method  | Description |
 | ------------- | ------------- |
-| setMaxCount(Integer maxPage)  | @param maxPage  -Max items to view  |
-| setCurrPage(Integer currPage)  | @param currPage -Item which is currently showen  |
+| void setMaxCount(Integer maxPage)  | @param maxPage  -Max items to view  |
+| void setCurrPage(Integer currPage)  | @param currPage -Item which is currently showen  |
 
 ## Layout sample
 Add custom view into your layout
