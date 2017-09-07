@@ -1,5 +1,7 @@
 # PageScroll
 
+![Alt text](https://github.com/dzoli/PageScroll/blob/master/screenshots/scroller.JPG?raw=true)
+
 ## Pre-requisites
 - Android SDK 25
 - Android Build Tools v25.0.1
