@@ -13,6 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         custom:textColor="BLUE"
+        custom:heightOfElementsAndTextSize="60"
+        custom:textChange="Page"
         >
     </com.makaji.aleksej.pagescroller.PageScrollerView_>
 
@@ -29,28 +31,28 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/addElements"
+        android:id="@+id/setMax1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add 3 elements" />
+        android:text="Max 1 element" />
 
     <Button
-        android:id="@+id/deleteElements"
+        android:id="@+id/setMax2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Delete 4" />
+        android:text="Max 2 elements" />
 
     <Button
-        android:id="@+id/deleteElementsList"
+        android:id="@+id/setMax3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="DeleteList 3 and 6" />
+        android:text="Max 3 elements" />
 
     <Button
-        android:id="@+id/asd"
+        android:id="@+id/setMax123"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="asdasd" />
+        android:text="Max 123 elements" />
 
 
 </LinearLayout>

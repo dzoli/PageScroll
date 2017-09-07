@@ -42,25 +42,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Click
-    void addElements() {
-        pageScrollerView.setMaxCount(2);
-        numberPicker2.setMaxValue(2);
-    }
-
-    @Click
-    void deleteElements() {
+    void setMax1() {
         pageScrollerView.setMaxCount(1);
         numberPicker2.setMaxValue(1);
     }
 
     @Click
-    void deleteElementsList() {
+    void setMax2() {
+        pageScrollerView.setMaxCount(2);
+        numberPicker2.setMaxValue(2);
+    }
+
+    @Click
+    void setMax3() {
         pageScrollerView.setMaxCount(3);
         numberPicker2.setMaxValue(3);
     }
 
     @Click
-    void asd() {
+    void setMax123() {
         pageScrollerView.setMaxCount(123);
         numberPicker2.setMaxValue(123);
     }

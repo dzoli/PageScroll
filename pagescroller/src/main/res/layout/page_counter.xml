@@ -21,7 +21,7 @@
             android:layout_width="30dp"
             android:layout_height="75dp"
             android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
+            android:layout_marginRight="3dp"
             android:clickable="false"
             android:divider="@null"
             android:enabled="false"
