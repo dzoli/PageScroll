@@ -22,16 +22,16 @@ dependencies {
 	  
 ## Custom attributes:
 
-custom:textColor="RED"						-To change text color<br />
-custom:heightOfElementsAndTextSize="60"		-To scale elements and text size (scope will apply from 30 to 120)<br />
-custom:textChange="new text"				-To change text <br />
-
+| Attribute  | Description |
+| ------------- | ------------- |
+| custom:textColor  | Change text color  |
+| custom:heightOfElementsAndTextSize  | Scale elements and text size (scope will apply from 30 to 120)  |
+| custom:textChange  | Change text  |
 
 ## API Methods:
 
-@param maxPage  -Max items to view<br />
-setMaxCount(Integer maxPage)<br />
-
-@param currPage -Item which is currently showen<br />
-setCurrPage(Integer currPage)<br />
+| Method  | Description |
+| ------------- | ------------- |
+| setMaxCount(Integer maxPage)  | @param maxPage  -Max items to view  |
+| setCurrPage(Integer currPage)  | @param currPage -Item which is currently showen  |
 	  
