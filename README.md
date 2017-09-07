@@ -34,4 +34,17 @@ dependencies {
 | ------------- | ------------- |
 | setMaxCount(Integer maxPage)  | @param maxPage  -Max items to view  |
 | setCurrPage(Integer currPage)  | @param currPage -Item which is currently showen  |
+
+## Layout sample
+Add custom view into your layout
+```
+<com.makaji.aleksej.pagescroller.PageScrollerView_
+        android:id="@+id/pageScrollerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        custom:textChange="Page:"
+        custom:textColor="RED"
+        custom:heightOfElementsAndTextSize="60">
+</com.makaji.aleksej.pagescroller.PageScrollerView_>
+```
 	  
