@@ -15,6 +15,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.makaji.aleksej.pagescroller.PageScrollerAdapter;
+import com.makaji.aleksej.pagescroller.R;
+
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EViewGroup;
@@ -24,7 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-
+/**
+ * This class is view group which enables scrolling pages with animation, with possibility of modifying some custom attributes
+ */
 @EViewGroup(resName = "page_counter")
 public class PageScrollerView extends LinearLayout {
 
@@ -44,9 +50,7 @@ public class PageScrollerView extends LinearLayout {
     TextView slash;
 
     private final List<Integer> itemList = new ArrayList<>();
-
     private Integer currentPage = 0;
-    private Integer maxPageBefore = 0;
     private String textColor;
     private String textChange;
     private Integer heightOfElementsAndTextSize;
@@ -54,10 +58,14 @@ public class PageScrollerView extends LinearLayout {
     private Integer animationSpeed;
     private Float textSize;
 
+    /**
+     * Constructor in which we get custom attributes from xml
+     * @param context
+     * @param attrs
+     */
     public PageScrollerView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        //get custom attributes
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
                 R.styleable.PageScrollerView,
@@ -80,50 +88,7 @@ public class PageScrollerView extends LinearLayout {
         View footerAndHeaderView = ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                 .inflate(R.layout.page_scroller_view_header_and_footer_view, nullParent, false);
 
-        //If custom attribute for height and text size is set, accept changes
-        if (heightOfElementsAndTextSize != 0) {
-
-            //max height can be 50 while min 16
-            if (heightOfElementsAndTextSize >50) {
-                heightOfElementsAndTextSize = 50;
-            } else if (heightOfElementsAndTextSize < 16) {
-                heightOfElementsAndTextSize =16;
-            }
-
-            //scalling text and height of elements based on device density
-            DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-            float scaledDensity = displayMetrics.scaledDensity;
-            float heightDensity = heightOfElementsAndTextSize *scaledDensity;
-            textSize = (float)(heightOfElementsAndTextSize - heightOfElementsAndTextSize /4);
-            heightOfElementsAndTextSize = (int)heightDensity;
-
-            setHeightOfElementsAndTextSize(heightOfElementsAndTextSize);
-
-            //set height of footer and header with custom attributes
-            footerAndHeaderView.setLayoutParams(new ListView.LayoutParams(LayoutParams.MATCH_PARENT, heightOfElementsAndTextSize));
-        }
-
-        //Limits for custom animation speed attribute
-        if (animationSpeed>350) {
-            animationSpeed = 350;
-        } else if (animationSpeed < 150) {
-            animationSpeed = 150;
-        }
-
-        //If custom attribute for color is set, accept changes
-        if (textColor!=null){
-            setTextColor(Color.parseColor(textColor));
-        }
-
-        //If custom attribute for changing text is set, accept changes
-        if (textChange!=null) {
-            page.setText(textChange);
-        }
-
-        //If custom attribute for changing fade is set, accept changes
-        if (numbersFading!=0) {
-            currentPageListView.setFadingEdgeLength(numbersFading);
-        }
+        checkCustomAttributesAndSetValues(footerAndHeaderView, heightOfElementsAndTextSize, textColor, textChange, numbersFading, animationSpeed );
 
         currentPageListView.addFooterView(footerAndHeaderView);
         currentPageListView.addHeaderView(footerAndHeaderView);
@@ -131,93 +96,50 @@ public class PageScrollerView extends LinearLayout {
         currentPageListView.setEnabled(false);
         pageScrollerAdapter.setPagesNumber(itemList);
         currentPageListView.setAdapter(pageScrollerAdapter);
-
     }
 
+    /**
+     * Set max pages
+     * @param maxPage
+     */
     public void setMaxCount(Integer maxPage) {
 
-        //Get width of slash character
-        int widthOfOneChar = getWidthOfCharacter(slash);
+        setWidthOfListBasedOnDigits(maxPage);
 
-        //Set width of list depending on number digits as item
-        LayoutParams paramsList = (LayoutParams) currentPageListView.getLayoutParams();
-        if (currentPage > maxPage) {
-            int nDigitsMax = (int) (Math.floor(Math.log10(Math.abs(maxPage))) + 1);
-            paramsList.width = (widthOfOneChar+(widthOfOneChar/5)+widthOfOneChar/3)*(nDigitsMax+1);
-        } else if (currentPage == 0) {
-            paramsList.width = (widthOfOneChar+(widthOfOneChar/5)+widthOfOneChar/3)*(1+1);
-            currentPage = 1;
-        } else {
-                int nDigitsCurrentPage = (int) (Math.floor(Math.log10(Math.abs(currentPage))) + 1);
-                paramsList.width = (widthOfOneChar+(widthOfOneChar/5)+widthOfOneChar/3)*(nDigitsCurrentPage+1);
-        }
-        currentPageListView.setLayoutParams(paramsList);
-
-        //if list consisted 2 items before, we remove 1 element which we added before, to fix scrolling bug
-        if (maxPageBefore == 2) {
-            itemList.remove(2);
-            maxPageBefore = maxPage;
-        }
-
-        //If item list was zero, add items (initialize list)
-        if (itemList.size() == 0 || itemList.indexOf(0) == 0) {
-            itemList.clear();   //
-            for (int i = 1; i <= maxPage; i++) {
+        itemList.clear();
+        //special case if there are 2 elements in list, due to scrolling bug
+        if (maxPage == 2) {
+            for (int i = 1; i <= 2; i++) {
                 itemList.add(i);
             }
-
-            //If nothing is selected, show 0 pages
-        } else if (maxPage == 0) {
-            itemList.clear();
-            itemList.add(0);
-            setCurrPage(0);
-
-            //Adding to list
-        } else if (maxPage > itemList.size()) {
-            int numberElementsAdded = maxPage - itemList.size();
-            for (int i = 1; i <= numberElementsAdded; i++) {
-                itemList.add(itemList.size() + 1);
-            }
-            setCurrPage(currentPage);
-
-            //Removing from list
-        } else if (maxPage < itemList.size()) {
-            int numberElementsDeleted = itemList.size() - maxPage;
-            itemList.subList(itemList.size() - numberElementsDeleted, itemList.size()).clear();
-            if (currentPage < itemList.size()) {
-                setCurrPage(currentPage);
-            }
-        }
-
-        //if list consist 2 elements, add one more element to fix scrolling bug (later we remove it)
-        if (maxPage == 2) {
             itemList.add(-1);
-            maxPageBefore = 2;
-            if (currentPage > 2) {
-                setCurrPage(2);
+            if (currentPage > maxPage){
+                setCurrentPage(2);
+            }
+        }else {
+            for (int i = 1; i <= maxPage ; i++) {
+                itemList.add(i);
+            }
+            if (maxPage == 1) {
+                setCurrentPage(1);
             }
         }
 
-        if (maxPage == 1) {
-            setCurrPage(1);
-        }
-        
         pageScrollerAdapter.setPagesNumber(itemList);
         maxPages.setText(String.format(Locale.getDefault(),"%d", maxPage));
-        currentPageListView.setLayoutParams(paramsList);
-
     }
 
-    //@param currPage -set current page
-    public void setCurrPage(Integer currPage) {
+    /**
+     * Set to current Page
+     * @param currPage -current page
+     */
+    public void setCurrentPage(Integer currPage) {
         int h1 = currentPageListView.getHeight();
         int h2 = maxPages.getHeight();
-
         currentPage = currPage;
 
-        //Count how many digits have param integer maxPage
-        int nDigits = (int) (Math.floor(Math.log10(Math.abs(currPage))) + 1);
-        //Get width of character
+        int nDigits = getNumberOfDigits(currPage);
+
         int widthOfOneChar = getWidthOfCharacter(slash);
 
         //set width of list
@@ -229,7 +151,10 @@ public class PageScrollerView extends LinearLayout {
         currentPageListView.smoothScrollToPositionFromTop(currPage, h1 / 2 - h2 / 2, animationSpeed);
     }
 
-    //set height and text size by custom attribute
+    /**
+     * Set height and text size by custom attribute
+     * @param heightOfElementsAndTextSize
+     */
     private void setHeightOfElementsAndTextSize(Integer heightOfElementsAndTextSize) {
 
         LayoutParams params = (LayoutParams) maxPages.getLayoutParams();
@@ -262,7 +187,10 @@ public class PageScrollerView extends LinearLayout {
         requestLayout();
     }
 
-    //set color of elements by custom attribute
+    /**
+     * Set color of elements by custom attribute
+     * @param colorCode
+     */
     private void setTextColor(Integer colorCode) {
         maxPages.setTextColor(colorCode);
         page.setTextColor(colorCode);
@@ -270,7 +198,11 @@ public class PageScrollerView extends LinearLayout {
         pageScrollerAdapter.setTextColor(colorCode);
     }
 
-    //Get width of character or more characters from textView
+    /**
+     * Get width of character or more characters from TextView
+     * @param textView -width of text
+     * @return width of character or more characters
+     */
     private int getWidthOfCharacter(TextView textView) {
         Rect bounds = new Rect();
         Paint textPaint = textView.getPaint();
@@ -278,4 +210,101 @@ public class PageScrollerView extends LinearLayout {
         return bounds.width();
     }
 
+    /**
+     * Check if custom attribute is set and apply his value if set
+     * @param footerAndHeaderView
+     * @param heightOfElementsAndTextSize
+     * @param textColor
+     * @param textChange
+     * @param numbersFading
+     * @param animationSpeed
+     */
+    private void checkCustomAttributesAndSetValues(View footerAndHeaderView, Integer heightOfElementsAndTextSize, String textColor, String textChange,
+                                                   Integer numbersFading, Integer animationSpeed) {
+
+        //If custom attribute for height and text size is set, accept changes
+        if (heightOfElementsAndTextSize != 0) {
+
+            heightOfElementsAndTextSize = getHeightOfElementsAndTextSizeInScope(heightOfElementsAndTextSize);
+
+            //scaling text and height of elements based on device density
+            DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+            float scaledDensity = displayMetrics.scaledDensity;
+            float heightDensity = heightOfElementsAndTextSize *scaledDensity;
+            textSize = (float)(heightOfElementsAndTextSize - heightOfElementsAndTextSize /4);
+            heightOfElementsAndTextSize = (int)heightDensity;
+
+            setHeightOfElementsAndTextSize(heightOfElementsAndTextSize);
+
+            //set height of footer and header with custom attributes
+            footerAndHeaderView.setLayoutParams(new ListView.LayoutParams(LayoutParams.MATCH_PARENT, heightOfElementsAndTextSize));
+        }
+
+        this.animationSpeed = getAnimationSepeedInScope(animationSpeed);
+
+        if (textColor!=null){
+            setTextColor(Color.parseColor(textColor));
+        }
+
+        if (textChange!=null) {
+            page.setText(textChange);
+        }
+
+        if (numbersFading!=0) {
+            currentPageListView.setFadingEdgeLength(numbersFading);
+        }
+    }
+
+    /**
+     * Set width of list based on number digits as item
+     * @param maxPage
+     */
+    void setWidthOfListBasedOnDigits(Integer maxPage) {
+
+        int widthOfOneChar = getWidthOfCharacter(slash);
+
+        LayoutParams paramsList = (LayoutParams) currentPageListView.getLayoutParams();
+        if (currentPage > maxPage) {
+            int nDigitsMax = getNumberOfDigits(maxPage);
+            paramsList.width = (widthOfOneChar+(widthOfOneChar/5)+widthOfOneChar/3)*(nDigitsMax+1);
+        } else if (currentPage == 0) {
+            paramsList.width = (widthOfOneChar+(widthOfOneChar/5)+widthOfOneChar/3)*(1+1);
+            currentPage = 1;
+        } else {
+            int nDigitsCurrentPage = getNumberOfDigits(currentPage);
+            paramsList.width = (widthOfOneChar+(widthOfOneChar/5)+widthOfOneChar/3)*(nDigitsCurrentPage+1);
+        }
+        currentPageListView.setLayoutParams(paramsList);
+    }
+
+    /**
+     * Limits for custom animation speed attribute
+     * @param animationSpeed
+     * @return limited animation speed
+     */
+    private int getAnimationSepeedInScope(Integer animationSpeed) {
+        return (animationSpeed > 280) ?
+                280 : (animationSpeed < 150) ?
+                150 : animationSpeed;
+    }
+
+    /**
+     * Limits for custom height and text size attribute
+     * @param heightOfElementsAndTextSize
+     * @return limited height and text size
+     */
+    private int getHeightOfElementsAndTextSizeInScope(Integer heightOfElementsAndTextSize) {
+        return (heightOfElementsAndTextSize > 50) ?
+                50 : (heightOfElementsAndTextSize < 16) ?
+                16 : heightOfElementsAndTextSize;
+    }
+
+    /**
+     * Return number of digits for character place
+     * @param currPage
+     * @return
+     */
+    private int getNumberOfDigits(Integer currPage) {
+        return (int) (Math.floor(Math.log10(Math.abs(currPage))) + 1);
+    }
 }

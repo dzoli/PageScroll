@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         numberPicker2.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                pageScrollerView.setCurrPage(numberPicker2.getValue());
+                pageScrollerView.setCurrentPage(numberPicker2.getValue());
             }
         });
 
