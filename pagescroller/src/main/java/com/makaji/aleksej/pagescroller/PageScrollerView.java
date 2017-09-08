@@ -2,15 +2,12 @@ package com.makaji.aleksej.pagescroller;
 
 import android.content.Context;
 
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,10 +47,9 @@ public class PageScrollerView extends LinearLayout {
 
     private Integer currentPage = 0;
     private Integer maxPageBefore = 0;
-
     private String textColor;
     private String textChange;
-    private Integer mHeightOfElementsAndTextSize;
+    private Integer heightOfElementsAndTextSize;
     private Integer numbersFading;
     private Integer animationSpeed;
     private Float textSize;
@@ -68,7 +64,7 @@ public class PageScrollerView extends LinearLayout {
                 0, 0);
         try {
             textColor = a.getString(R.styleable.PageScrollerView_textColor);
-            mHeightOfElementsAndTextSize = a.getInteger(R.styleable.PageScrollerView_heightOfElementsAndTextSize, 0);
+            heightOfElementsAndTextSize = a.getInteger(R.styleable.PageScrollerView_heightOfElementsAndTextSize, 0);
             textChange = a.getString(R.styleable.PageScrollerView_textChange);
             numbersFading = a.getInteger(R.styleable.PageScrollerView_numbersFading, 0);
             animationSpeed = a.getInteger(R.styleable.PageScrollerView_animationSpeed, 200);
@@ -85,26 +81,26 @@ public class PageScrollerView extends LinearLayout {
                 .inflate(R.layout.page_scroller_view_header_and_footer_view, nullParent, false);
 
         //If custom attribute for height and text size is set, accept changes
-        if (mHeightOfElementsAndTextSize!= 0) {
+        if (heightOfElementsAndTextSize != 0) {
 
             //max height can be 50 while min 16
-            if (mHeightOfElementsAndTextSize>50) {
-                mHeightOfElementsAndTextSize = 50;
-            } else if (mHeightOfElementsAndTextSize < 16) {
-                mHeightOfElementsAndTextSize =16;
+            if (heightOfElementsAndTextSize >50) {
+                heightOfElementsAndTextSize = 50;
+            } else if (heightOfElementsAndTextSize < 16) {
+                heightOfElementsAndTextSize =16;
             }
 
             //scalling text and height of elements based on device density
             DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
             float scaledDensity = displayMetrics.scaledDensity;
-            float heightDensity = mHeightOfElementsAndTextSize*scaledDensity;
-            textSize = (float)(mHeightOfElementsAndTextSize- mHeightOfElementsAndTextSize/4);
-            mHeightOfElementsAndTextSize = (int)heightDensity;
+            float heightDensity = heightOfElementsAndTextSize *scaledDensity;
+            textSize = (float)(heightOfElementsAndTextSize - heightOfElementsAndTextSize /4);
+            heightOfElementsAndTextSize = (int)heightDensity;
 
-            setHeightOfElementsAndTextSize(mHeightOfElementsAndTextSize);
+            setHeightOfElementsAndTextSize(heightOfElementsAndTextSize);
 
             //set height of footer and header with custom attributes
-            footerAndHeaderView.setLayoutParams(new ListView.LayoutParams(LayoutParams.MATCH_PARENT,mHeightOfElementsAndTextSize));
+            footerAndHeaderView.setLayoutParams(new ListView.LayoutParams(LayoutParams.MATCH_PARENT, heightOfElementsAndTextSize));
         }
 
         //Limits for custom animation speed attribute
@@ -157,24 +153,55 @@ public class PageScrollerView extends LinearLayout {
         }
         currentPageListView.setLayoutParams(paramsList);
 
-        itemList.clear();
-        if (maxPage == 2) {
-            for (int i = 1; i <= 2; i++) {
+        //if list consisted 2 items before, we remove 1 element which we added before, to fix scrolling bug
+        if (maxPageBefore == 2) {
+            itemList.remove(2);
+            maxPageBefore = maxPage;
+        }
+
+        //If item list was zero, add items (initialize list)
+        if (itemList.size() == 0 || itemList.indexOf(0) == 0) {
+            itemList.clear();   //
+            for (int i = 1; i <= maxPage; i++) {
                 itemList.add(i);
             }
-            itemList.add(-1);
-            if (currentPage > maxPage){
-                setCurrPage(2);
+
+            //If nothing is selected, show 0 pages
+        } else if (maxPage == 0) {
+            itemList.clear();
+            itemList.add(0);
+            setCurrPage(0);
+
+            //Adding to list
+        } else if (maxPage > itemList.size()) {
+            int numberElementsAdded = maxPage - itemList.size();
+            for (int i = 1; i <= numberElementsAdded; i++) {
+                itemList.add(itemList.size() + 1);
             }
-        }else {
-            for (int i = 1; i <= maxPage ; i++) {
-                itemList.add(i);
-            }
-            if (maxPage == 1) {
-                setCurrPage(1);
+            setCurrPage(currentPage);
+
+            //Removing from list
+        } else if (maxPage < itemList.size()) {
+            int numberElementsDeleted = itemList.size() - maxPage;
+            itemList.subList(itemList.size() - numberElementsDeleted, itemList.size()).clear();
+            if (currentPage < itemList.size()) {
+                setCurrPage(currentPage);
             }
         }
 
+        //if list consist 2 elements, add one more element to fix scrolling bug (later we remove it)
+        if (maxPage == 2) {
+            itemList.add(-1);
+            maxPageBefore = 2;
+            if (currentPage > 2) {
+                setCurrPage(2);
+            }
+        }
+
+        if (maxPage == 1) {
+            setCurrPage(1);
+        }
+        
         pageScrollerAdapter.setPagesNumber(itemList);
         maxPages.setText(String.format(Locale.getDefault(),"%d", maxPage));
         currentPageListView.setLayoutParams(paramsList);
