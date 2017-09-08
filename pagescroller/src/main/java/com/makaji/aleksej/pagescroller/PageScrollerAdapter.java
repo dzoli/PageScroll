@@ -57,7 +57,7 @@ public class PageScrollerAdapter extends BaseAdapter {
 
         numberItemView.bind((Integer) getItem(position));
 
-        //When we have 2 elements in list, to hide 3rd added element
+        //When we have 2 elements in list, hide 3rd added element
         if (dataItems.size() == 3 && position == 2 && dataItems.get(2).equals(-1)) {
             numberItemView.setVisibility(View.GONE);
         } else {

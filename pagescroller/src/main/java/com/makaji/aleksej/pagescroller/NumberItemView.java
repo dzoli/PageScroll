@@ -26,6 +26,10 @@ public class NumberItemView extends LinearLayout {
         numberTv.setText(String.format(Locale.getDefault(), "%d", num));
     }
 
+    /**
+     * Set height of element in item list with custom attribute
+     * @param heightOfElementsAndTextSize
+     */
     public void setHeightOfElementsAndTextSize(Integer heightOfElementsAndTextSize) {
 
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
@@ -33,7 +37,6 @@ public class NumberItemView extends LinearLayout {
 
         float textSize =(heightOfElementsAndTextSize/scaledDensity)- ((heightOfElementsAndTextSize/scaledDensity)/4);
 
-        //set height of element in item list with custom attribute
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) numberTv.getLayoutParams();
         params.height = heightOfElementsAndTextSize;
         numberTv.setTextSize(textSize);
