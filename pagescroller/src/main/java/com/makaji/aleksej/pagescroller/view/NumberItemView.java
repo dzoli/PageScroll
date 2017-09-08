@@ -1,8 +1,7 @@
-package com.makaji.aleksej.pagescroller;
+package com.makaji.aleksej.pagescroller.view;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;

@@ -5,15 +5,12 @@ import android.dmi.pmf.novica.myapplication.R;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.NumberPicker;
 
-import com.makaji.aleksej.pagescroller.PageScrollerView;
+import com.makaji.aleksej.pagescroller.view.PageScrollerView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
-
-import java.util.Arrays;
-import java.util.List;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity {
@@ -26,8 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     @AfterViews
     void init() {
-
-        // pageScrollerCustomView.init();
         pageScrollerView.setMaxCount(12);
 
         numberPicker2.setMaxValue(12);
@@ -35,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         numberPicker2.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                pageScrollerView.setCurrPage(numberPicker2.getValue());
+                pageScrollerView.setCurrentPage(numberPicker2.getValue());
             }
         });
 

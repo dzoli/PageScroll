@@ -1,9 +1,12 @@
-package com.makaji.aleksej.pagescroller;
+package com.makaji.aleksej.pagescroller.adapter;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
+import com.makaji.aleksej.pagescroller.view.NumberItemView;
+import com.makaji.aleksej.pagescroller.view.NumberItemView_;
 
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;

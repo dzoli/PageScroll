@@ -1,4 +1,4 @@
-package com.makaji.aleksej.pagescroller;
+package com.makaji.aleksej.pagescroller.view;
 
 import android.content.Context;
 
@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.makaji.aleksej.pagescroller.R;
+import com.makaji.aleksej.pagescroller.adapter.PageScrollerAdapter;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -110,14 +113,14 @@ public class PageScrollerView extends LinearLayout {
             }
             itemList.add(-1);
             if (currentPage > maxPage){
-                setCurrPage(2);
+                setCurrentPage(2);
             }
         }else {
             for (int i = 1; i <= maxPage ; i++) {
                 itemList.add(i);
             }
             if (maxPage == 1) {
-                setCurrPage(1);
+                setCurrentPage(1);
             }
         }
 
@@ -129,13 +132,12 @@ public class PageScrollerView extends LinearLayout {
      * Set to current Page
      * @param currPage -current page
      */
-    public void setCurrPage(Integer currPage) {
+    public void setCurrentPage(Integer currPage) {
         int h1 = currentPageListView.getHeight();
         int h2 = maxPages.getHeight();
         currentPage = currPage;
 
-        //Count how many digits have param integer maxPage
-        int nDigits = (int) (Math.floor(Math.log10(Math.abs(currPage))) + 1);
+        int nDigits = getNumberOfDigits(currPage);
 
         int widthOfOneChar = getWidthOfCharacter(slash);
 
@@ -262,13 +264,13 @@ public class PageScrollerView extends LinearLayout {
 
         LayoutParams paramsList = (LayoutParams) currentPageListView.getLayoutParams();
         if (currentPage > maxPage) {
-            int nDigitsMax = (int) (Math.floor(Math.log10(Math.abs(maxPage))) + 1);
+            int nDigitsMax = getNumberOfDigits(maxPage);
             paramsList.width = (widthOfOneChar+(widthOfOneChar/5)+widthOfOneChar/3)*(nDigitsMax+1);
         } else if (currentPage == 0) {
             paramsList.width = (widthOfOneChar+(widthOfOneChar/5)+widthOfOneChar/3)*(1+1);
             currentPage = 1;
         } else {
-            int nDigitsCurrentPage = (int) (Math.floor(Math.log10(Math.abs(currentPage))) + 1);
+            int nDigitsCurrentPage = getNumberOfDigits(currentPage);
             paramsList.width = (widthOfOneChar+(widthOfOneChar/5)+widthOfOneChar/3)*(nDigitsCurrentPage+1);
         }
         currentPageListView.setLayoutParams(paramsList);
@@ -294,5 +296,14 @@ public class PageScrollerView extends LinearLayout {
         return (heightOfElementsAndTextSize > 50) ?
                 50 : (heightOfElementsAndTextSize < 16) ?
                 16 : heightOfElementsAndTextSize;
+    }
+
+    /**
+     * Return number of digits for character place
+     * @param currPage
+     * @return
+     */
+    private int getNumberOfDigits(Integer currPage) {
+        return (int) (Math.floor(Math.log10(Math.abs(currPage))) + 1);
     }
 }
