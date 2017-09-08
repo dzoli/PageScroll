@@ -31,8 +31,10 @@ dependencies {
 | Attribute  | Description |
 | ------------- | ------------- |
 | custom:textColor  | Change text color  |
-| custom:heightOfElementsAndTextSize  | Scale elements and text size (scope will apply from 30 to 120)  |
+| custom:heightOfElementsAndTextSize  | Scale elements and text size (scope will apply from 35 to 100)  |
 | custom:textChange  | Change text  |
+| custom:numbersFading  | Fading elements in list  |
+| custom:animationSpeed  | Change animation speed of scrolling (scope will apply from 150 to 350. Optimal is 200, best performances  |
 
 ## API Methods:
 
@@ -44,14 +46,16 @@ dependencies {
 ## Layout sample
 Add custom view into your layout
 ```
-<com.makaji.aleksej.pagescroller.PageScrollerView_
+ <com.makaji.aleksej.pagescroller.PageScrollerView_
         android:id="@+id/pageScrollerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        custom:textChange="Page:"
+        custom:heightOfElementsAndTextSize="40"
+        custom:textChange="New text"
         custom:textColor="RED"
-        custom:heightOfElementsAndTextSize="60">
-</com.makaji.aleksej.pagescroller.PageScrollerView_>
+        custom:numbersFading="30"
+        custom:animationSpeed="200">
+    </com.makaji.aleksej.pagescroller.PageScrollerView_>
 ```
 ## License
 This project is licensed under the MIT License - see the LICENSE.md file for details
