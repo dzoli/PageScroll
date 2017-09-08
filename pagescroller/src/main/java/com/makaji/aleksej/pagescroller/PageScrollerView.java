@@ -86,18 +86,21 @@ public class PageScrollerView extends LinearLayout {
 
         //If custom attribute for height and text size is set, accept changes
         if (mHeightOfElementsAndTextSize!= 0) {
+
+            //max height can be 50 while min 16
+            if (mHeightOfElementsAndTextSize>50) {
+                mHeightOfElementsAndTextSize = 50;
+            } else if (mHeightOfElementsAndTextSize < 16) {
+                mHeightOfElementsAndTextSize =16;
+            }
+
+            //scalling text and height of elements based on device density
             DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
             float scaledDensity = displayMetrics.scaledDensity;
             float heightDensity = mHeightOfElementsAndTextSize*scaledDensity;
             textSize = (float)(mHeightOfElementsAndTextSize- mHeightOfElementsAndTextSize/4);
             mHeightOfElementsAndTextSize = (int)heightDensity;
 
-            //max height can be 120 while min 30
-            if (mHeightOfElementsAndTextSize>50) {
-                mHeightOfElementsAndTextSize = 50;
-            } else if (mHeightOfElementsAndTextSize < 16) {
-                mHeightOfElementsAndTextSize =16;
-            }
             setHeightOfElementsAndTextSize(mHeightOfElementsAndTextSize);
 
             //set height of footer and header with custom attributes

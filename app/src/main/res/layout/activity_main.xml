@@ -12,7 +12,7 @@
         android:id="@+id/pageScrollerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        custom:heightOfElementsAndTextSize="21"
+        custom:heightOfElementsAndTextSize="16"
 
 >
     </com.makaji.aleksej.pagescroller.PageScrollerView_>
