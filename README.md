@@ -22,7 +22,7 @@ allprojects {
 - Step 2. Add the dependency </br>
 ```
 dependencies {
-	compile 'com.github.dzoli:PageScroll:0.1.0'
+	compile 'com.github.dzoli:PageScroll:0.1.2'
 }	
 ```
 	  
@@ -31,7 +31,7 @@ dependencies {
 | Attribute  | Description |
 | ------------- | ------------- |
 | custom:textColor  | Change text color  |
-| custom:heightOfElementsAndTextSize  | Scale elements and text size (scope will apply from 35 to 100)  |
+| custom:heightOfElementsAndTextSize  | Scale elements and text size (scope will apply from 16 to 50)  |
 | custom:textChange  | Change text  |
 | custom:numbersFading  | Fading elements in list  |
 | custom:animationSpeed  | Change animation speed of scrolling (scope will apply from 150 to 350. Optimal is 200, best performances  |
