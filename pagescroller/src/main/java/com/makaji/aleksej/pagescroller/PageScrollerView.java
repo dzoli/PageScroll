@@ -2,11 +2,14 @@ package com.makaji.aleksej.pagescroller;
 
 import android.content.Context;
 
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +56,7 @@ public class PageScrollerView extends LinearLayout {
     private Integer mHeightOfElementsAndTextSize;
     private Integer numbersFading;
     private Integer animationSpeed;
+    private Float textSize;
 
     public PageScrollerView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -82,11 +86,17 @@ public class PageScrollerView extends LinearLayout {
 
         //If custom attribute for height and text size is set, accept changes
         if (mHeightOfElementsAndTextSize!= 0) {
+            DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+            float scaledDensity = displayMetrics.scaledDensity;
+            float heightDensity = mHeightOfElementsAndTextSize*scaledDensity;
+            textSize = (float)(mHeightOfElementsAndTextSize- mHeightOfElementsAndTextSize/4);
+            mHeightOfElementsAndTextSize = (int)heightDensity;
+
             //max height can be 120 while min 30
-            if (mHeightOfElementsAndTextSize>100) {
-                mHeightOfElementsAndTextSize = 100;
-            } else if (mHeightOfElementsAndTextSize < 35) {
-                mHeightOfElementsAndTextSize =35;
+            if (mHeightOfElementsAndTextSize>50) {
+                mHeightOfElementsAndTextSize = 50;
+            } else if (mHeightOfElementsAndTextSize < 16) {
+                mHeightOfElementsAndTextSize =16;
             }
             setHeightOfElementsAndTextSize(mHeightOfElementsAndTextSize);
 
@@ -122,6 +132,7 @@ public class PageScrollerView extends LinearLayout {
         currentPageListView.setEnabled(false);
         pageScrollerAdapter.setPagesNumber(itemList);
         currentPageListView.setAdapter(pageScrollerAdapter);
+
     }
 
     public void setMaxCount(Integer maxPage) {
@@ -164,6 +175,7 @@ public class PageScrollerView extends LinearLayout {
         pageScrollerAdapter.setPagesNumber(itemList);
         maxPages.setText(String.format(Locale.getDefault(),"%d", maxPage));
         currentPageListView.setLayoutParams(paramsList);
+
     }
 
     //@param currPage -set current page
@@ -193,19 +205,19 @@ public class PageScrollerView extends LinearLayout {
         LayoutParams params = (LayoutParams) maxPages.getLayoutParams();
         params.height = heightOfElementsAndTextSize;
         params.setMargins(0, heightOfElementsAndTextSize, 0, 0);
-        maxPages.setTextSize(TypedValue.COMPLEX_UNIT_SP, heightOfElementsAndTextSize/3 + heightOfElementsAndTextSize/15);
+        maxPages.setTextSize(textSize);
         maxPages.setLayoutParams(params);
 
         LayoutParams paramsPage = (LayoutParams) page.getLayoutParams();
         paramsPage.height = heightOfElementsAndTextSize;
         paramsPage.setMargins(0, heightOfElementsAndTextSize, 0, 0);
-        page.setTextSize(TypedValue.COMPLEX_UNIT_SP, heightOfElementsAndTextSize/3 + heightOfElementsAndTextSize/15);
+        page.setTextSize(textSize);
         page.setLayoutParams(paramsPage);
 
         LayoutParams paramsSlash = (LayoutParams) slash.getLayoutParams();
         paramsSlash.height = heightOfElementsAndTextSize;
         paramsSlash.setMargins(0, heightOfElementsAndTextSize, 0, 0);
-        slash.setTextSize(TypedValue.COMPLEX_UNIT_SP, heightOfElementsAndTextSize/3 + heightOfElementsAndTextSize/15);
+        slash.setTextSize(textSize);
         slash.setLayoutParams(paramsSlash);
 
         LayoutParams paramsList = (LayoutParams) currentPageListView.getLayoutParams();
@@ -235,4 +247,5 @@ public class PageScrollerView extends LinearLayout {
         textPaint.getTextBounds(textView.getText().toString(), 0, textView.getText().length(), bounds);
         return bounds.width();
     }
+
 }

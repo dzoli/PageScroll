@@ -1,6 +1,7 @@
 package com.makaji.aleksej.pagescroller;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -27,10 +28,15 @@ public class NumberItemView extends LinearLayout {
 
     public void setHeightOfElementsAndTextSize(Integer heightOfElementsAndTextSize) {
 
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        float scaledDensity = displayMetrics.scaledDensity;
+
+        float textSize =(heightOfElementsAndTextSize/scaledDensity)- ((heightOfElementsAndTextSize/scaledDensity)/4);
+
         //set height of element in item list with custom attribute
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) numberTv.getLayoutParams();
         params.height = heightOfElementsAndTextSize;
-        numberTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, heightOfElementsAndTextSize/3 + heightOfElementsAndTextSize/15 );
+        numberTv.setTextSize(textSize);
         numberTv.setLayoutParams(params);
 
         invalidate();
