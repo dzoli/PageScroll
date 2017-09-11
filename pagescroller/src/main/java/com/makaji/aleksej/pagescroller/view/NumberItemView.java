@@ -28,7 +28,7 @@ public class NumberItemView extends LinearLayout {
     /**
      * Set height of element in item list with custom attribute
      *
-     * @param heightOfElementsAndTextSize
+     * @param heightOfElementsAndTextSize - height and text size of View elements
      */
     public void setHeightOfElementsAndTextSize(Integer heightOfElementsAndTextSize) {
 

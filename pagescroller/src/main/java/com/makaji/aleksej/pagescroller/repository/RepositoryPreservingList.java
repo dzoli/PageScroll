@@ -4,18 +4,28 @@ import com.makaji.aleksej.pagescroller.listener.OnPageChangedListener;
 
 import java.util.List;
 
+/**
+ *
+ */
 public class RepositoryPreservingList extends RepositoryBean {
 
-    private OnPageChangedListener listener;
+    private final OnPageChangedListener listener;
 
     private Integer maxPageBefore = 0;
 
     public RepositoryPreservingList(OnPageChangedListener listener) {
+        super();
         this.listener = listener;
     }
 
+
+    /**
+     *
+     * @param maxPage
+     * @param currentPage
+     */
     @Override
-    public void addItems(Integer maxPage, Integer currentPage) {
+    public void updateItems(Integer maxPage, Integer currentPage) {
         //if list consisted 2 items before, we remove 1 element which we added before, to fix scrolling bug
         if (maxPageBefore == 2) {
             itemList.remove(2);
@@ -67,6 +77,10 @@ public class RepositoryPreservingList extends RepositoryBean {
 
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<Integer> getItems() {
         return itemList;

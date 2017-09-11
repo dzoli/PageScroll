@@ -42,7 +42,7 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
     @Bean
     PageScrollerAdapter pageScrollerAdapter;
 
-    RepositoryBean repositoryBean = new RepositoryClearingList(this);
+    private final RepositoryBean repositoryBean = new RepositoryClearingList(this);
 
     @ViewById
     TextView page;
@@ -61,8 +61,8 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
     /**
      * Constructor in which we get custom attributes from xml
      *
-     * @param context
-     * @param attrs
+     * @param context Context of a View.
+     * @param attrs A collection of attributes, as found associated with a tag in an XML document of a View.
      */
     public PageScrollerView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -101,13 +101,13 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
     /**
      * Set max pages
      *
-     * @param maxPage
+     * @param maxPage Containing the max number of elements in ListView.
      */
     public void setMaxCount(Integer maxPage) {
 
         setWidthOfListBasedOnDigits(maxPage);
 
-        repositoryBean.addItems(maxPage, currentPage);
+        repositoryBean.updateItems(maxPage, currentPage);
 
         pageScrollerAdapter.setPagesNumber(repositoryBean.getItems());
         maxPages.setText(String.format(Locale.getDefault(), "%d", maxPage));
@@ -116,7 +116,7 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
     /**
      * Set to current Page
      *
-     * @param currPage -current page
+     * @param currPage Containing value of new current page in ListView.
      */
     public void setCurrentPage(Integer currPage) {
         int h1 = currentPageListView.getHeight();
@@ -140,7 +140,7 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
     /**
      * Set height and text size by custom attribute
      *
-     * @param heightOfElementsAndTextSize
+     * @param heightOfElementsAndTextSize Containing value of height and text size of View elements.
      */
     private void setHeightOfElementsAndTextSize(Integer heightOfElementsAndTextSize) {
         LayoutParams params = (LayoutParams) maxPages.getLayoutParams();
@@ -176,7 +176,7 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
     /**
      * Set color of elements by custom attribute
      *
-     * @param colorCode
+     * @param colorCode A color value in the form 0xAARRGGBB that is represent as an Integer.
      */
     private void setTextColor(Integer colorCode) {
         maxPages.setTextColor(colorCode);
@@ -188,8 +188,8 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
     /**
      * Get width of character or more characters from TextView
      *
-     * @param textView -width of text
-     * @return width of character or more characters
+     * @param textView A TextView element of which width will be calculated.
+     * @return Width of character or more characters of a TextView
      */
     private int getWidthOfCharacter(TextView textView) {
         Rect bounds = new Rect();
@@ -201,12 +201,12 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
     /**
      * Check if custom attribute is set and apply his value if set
      *
-     * @param footerAndHeaderView
-     * @param heightOfElementsAndTextSize
-     * @param textColor
-     * @param textChange
-     * @param numbersFading
-     * @param animationSpeed
+     * @param footerAndHeaderView Footer and Header elements of a ListView.
+     * @param heightOfElementsAndTextSize Height of View and text size of elements on a Custom View.
+     * @param textColor String representation of a text color of View elements.
+     * @param textChange String value of TextView page element.
+     * @param numbersFading Number of fading pixels.
+     * @param animationSpeed Number of animation speed when scrolling items in ListView expressed in milliseconds.
      */
     private void checkCustomAttributesAndSetValues(View footerAndHeaderView, Integer heightOfElementsAndTextSize, String textColor, String textChange,
                                                    Integer numbersFading, Integer animationSpeed) {
@@ -247,9 +247,9 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
     /**
      * Set width of list based on number digits as item
      *
-     * @param maxPage
+     * @param maxPage Max page number that is shown in ListView.
      */
-    void setWidthOfListBasedOnDigits(Integer maxPage) {
+    private void setWidthOfListBasedOnDigits(Integer maxPage) {
 
         int widthOfOneChar = getWidthOfCharacter(slash);
 
@@ -270,8 +270,8 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
     /**
      * Limits for custom animation speed attribute
      *
-     * @param animationSpeed
-     * @return limited animation speed
+     * @param animationSpeed Number of animation speed when scrolling items in ListView expressed in milliseconds.
+     * @return Limited animation speed (scope is from 150 to 280).
      */
     private int getAnimationSepeedInScope(Integer animationSpeed) {
         return (animationSpeed > 280) ?
@@ -280,10 +280,10 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
     }
 
     /**
-     * Limits for custom height and text size attribute
+     * Limits for custom height and text size attribute.
      *
-     * @param heightOfElementsAndTextSize
-     * @return limited height and text size
+     * @param heightOfElementsAndTextSize  Height of View and text size of elements on a Custom View.
+     * @return Limited height and text size (scope is from 16 to 50)
      */
     private int getHeightOfElementsAndTextSizeInScope(Integer heightOfElementsAndTextSize) {
         return (heightOfElementsAndTextSize > 50) ?
@@ -292,15 +292,20 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
     }
 
     /**
-     * Return number of digits for character place
+     * Return number of digits for character place in a ListView.
      *
-     * @param currPage
-     * @return
+     * @param currPage Containing value of new current page in ListView.
+     * @return Number of digits for character place.
      */
     private int getNumberOfDigits(Integer currPage) {
         return (int) (Math.floor(Math.log10(Math.abs(currPage))) + 1);
     }
 
+    /**
+     * Implementation of OnPageChangedListener callback method, for changing current pages in ListView.
+     *
+     * @param newPageValue New value of current page.
+     */
     @Override
     public void pageChanged(Integer newPageValue) {
         setCurrentPage(newPageValue);

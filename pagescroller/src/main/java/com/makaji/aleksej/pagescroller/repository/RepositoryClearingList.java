@@ -9,14 +9,18 @@ public class RepositoryClearingList extends RepositoryBean {
     private OnPageChangedListener listener;
 
     public RepositoryClearingList(OnPageChangedListener listener) {
+        super();
         this.listener = listener;
     }
 
-    public RepositoryClearingList() {
-        super();
-    }
-
-    public void addItems(Integer maxPage, Integer currentPage) {
+    /**
+     * Updates list of data that is shown in ListView. This method always clearing list
+     * and then updates values again.
+     *
+     * @param maxPage Value of max page that is shown in ListView.
+     * @param currentPage Value of current page in ListView.
+     */
+    public void updateItems(Integer maxPage, Integer currentPage) {
         itemList.clear();
         if (maxPage == 2) {
             for (int i = 1; i <= 2; i++) {
@@ -36,6 +40,11 @@ public class RepositoryClearingList extends RepositoryBean {
         }
     }
 
+    /**
+     * Getter
+     *
+     * @return List of data items.
+     */
     public List<Integer> getItems() {
         return itemList;
     }
