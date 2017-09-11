@@ -1,6 +1,6 @@
 # PageScroll
 
-![Alt text](https://github.com/dzoli/PageScroll/blob/master/screenshots/scroller.JPG?raw=true)
+![Alt text](https://github.com/dzoli/PageScroll/blob/master/screenshots/scroll.JPG?raw=true)
 
 ## Pre-requisites
 - Android SDK 25
@@ -22,7 +22,7 @@ allprojects {
 - Step 2. Add the dependency </br>
 ```
 dependencies {
-	compile 'com.github.dzoli:PageScroll:0.1.2'
+	compile 'com.github.dzoli:PageScroll:0.1.4'
 }	
 ```
 	  
@@ -34,28 +34,28 @@ dependencies {
 | custom:heightOfElementsAndTextSize  | Scale elements and text size (scope will apply from 16 to 50)  |
 | custom:textChange  | Change text  |
 | custom:numbersFading  | Fading elements in list  |
-| custom:animationSpeed  | Change animation speed of scrolling (scope will apply from 150 to 350. Optimal is 200, best performances  |
+| custom:animationSpeed  | Change animation speed of scrolling (scope will apply from 150 to 280. Optimal is 200, best performances  |
 
 ## API Methods:
 
 | Method  | Description |
 | ------------- | ------------- |
 | void setMaxCount(Integer maxPage)  | @param maxPage  -Max items to view  |
-| void setCurrPage(Integer currPage)  | @param currPage -Item which is currently showen  |
+| void setCurrentPage(Integer currPage)  | @param currPage -Item which is currently showen  |
 
 ## Layout sample
 Add custom view into your layout
 ```
- <com.makaji.aleksej.pagescroller.PageScrollerView_
+ <com.makaji.aleksej.pagescroller.view.PageScrollerView_
         android:id="@+id/pageScrollerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        custom:heightOfElementsAndTextSize="40"
-        custom:textChange="New text"
-        custom:textColor="RED"
-        custom:numbersFading="30"
-        custom:animationSpeed="200">
-    </com.makaji.aleksej.pagescroller.PageScrollerView_>
+        custom:numbersFading="200"
+        custom:textChange="Page:"
+        custom:animationSpeed="250"
+        custom:heightOfElementsAndTextSize="30"
+        custom:textColor="GRAY"
+        />
 ```
 ## License
 This project is licensed under the MIT License - see the LICENSE.md file for details
