@@ -28,7 +28,8 @@ import org.androidannotations.annotations.ViewById;
 import java.util.Locale;
 
 /**
- * This class is view group which enables scrolling pages with animation, with possibility of modifying some custom attributes
+ * This class is view group which enables scrolling pages with animation, with possibility of modifying some custom attributes.
+ * Class implements listener with callback method that is responsible on changing current page. Developer can choose between two implementations.
  */
 @EViewGroup(resName = "page_counter")
 public class PageScrollerView extends LinearLayout implements OnPageChangedListener {
@@ -51,11 +52,18 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
     TextView slash;
 
     private Integer currentPage = 0;
-    private String textColor;
-    private String textChange;
-    private Integer heightOfElementsAndTextSize;
-    private Integer numbersFading;
+    private final String textColor;
+    private final String textChange;
+    private final Integer heightOfElementsAndTextSize;
+    private final Integer numbersFading;
     private Integer animationSpeed;
+    public static final int ANIMATION_SPEED_MAX = 280;
+    public static final int ANIMATION_SPEED_MIN = 150;
+    public static final int ANIMATION_SPEED_DEFAULT = 200;
+    public static final int NUMBERS_FADING_DEFAULT = 0;
+    public static final int HEIGHT_AND_TEXT_SIZE_DEFAULT = 0;
+    public static final int HEIGHT_AND_TEXT_SIZE_MAX = 50;
+    public static final int HEIGHT_AND_TEXT_SIZE_MIN = 16;
     private Float textSize;
 
     /**
@@ -73,33 +81,48 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
                 0, 0);
         try {
             textColor = a.getString(R.styleable.PageScrollerView_textColor);
-            heightOfElementsAndTextSize = a.getInteger(R.styleable.PageScrollerView_heightOfElementsAndTextSize, 0);
+            heightOfElementsAndTextSize = a.getInteger(R.styleable.PageScrollerView_heightOfElementsAndTextSize, HEIGHT_AND_TEXT_SIZE_DEFAULT);
             textChange = a.getString(R.styleable.PageScrollerView_textChange);
-            numbersFading = a.getInteger(R.styleable.PageScrollerView_numbersFading, 0);
-            animationSpeed = a.getInteger(R.styleable.PageScrollerView_animationSpeed, 200);
+            numbersFading = a.getInteger(R.styleable.PageScrollerView_numbersFading, NUMBERS_FADING_DEFAULT);
+            animationSpeed = a.getInteger(R.styleable.PageScrollerView_animationSpeed, ANIMATION_SPEED_DEFAULT);
         } finally {
             a.recycle();
         }
     }
 
+
+    /**
+     * Method which is called after the views binding has happened
+     *
+     */
     @AfterViews
     public void init() {
         final ViewGroup nullParent = null;
+
+        //Inflating header and footer layout
         View footerAndHeaderView = ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                 .inflate(R.layout.page_scroller_view_header_and_footer_view, nullParent, false);
 
         checkCustomAttributesAndSetValues(footerAndHeaderView, heightOfElementsAndTextSize, textColor, textChange, numbersFading, animationSpeed);
 
+        //Adding header and footer to ListView
         currentPageListView.addFooterView(footerAndHeaderView);
         currentPageListView.addHeaderView(footerAndHeaderView);
 
+        //Disabling ListView so it can not be clicked or scrolled
         currentPageListView.setEnabled(false);
+
+        //Setting data for adapter
         pageScrollerAdapter.setPagesNumber(repositoryBean.getItems());
+
+        //Setting adapter for ListView
         currentPageListView.setAdapter(pageScrollerAdapter);
     }
 
     /**
      * Set max pages
+     * Passed param is number of max pages, on which is also calculated width of list view.
+     * Method call also repositoryBean which have two implementations
      *
      * @param maxPage
      */
@@ -107,14 +130,19 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
 
         setWidthOfListBasedOnDigits(maxPage);
 
+        //Business logic for creating list items, which have two implementations
         repositoryBean.addItems(maxPage, currentPage);
 
+        //Refresh items in adapter
         pageScrollerAdapter.setPagesNumber(repositoryBean.getItems());
+
         maxPages.setText(String.format(Locale.getDefault(), "%d", maxPage));
     }
 
     /**
-     * Set to current Page
+     * Set to current Page.
+     * Calculates which item in list to show based on list view height and one of elements height.
+     * As well, calculating width of list based on number of digits which are set as list elements.
      *
      * @param currPage -current page
      */
@@ -169,6 +197,7 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
 
         pageScrollerAdapter.setHeightOfElementsAndTextSize(heightOfElementsAndTextSize);
 
+        //Remeasure and redraw layouts
         invalidate();
         requestLayout();
     }
@@ -212,7 +241,7 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
                                                    Integer numbersFading, Integer animationSpeed) {
 
         //If custom attribute for height and text size is set, accept changes
-        if (heightOfElementsAndTextSize != 0) {
+        if (heightOfElementsAndTextSize != HEIGHT_AND_TEXT_SIZE_DEFAULT) {
 
             heightOfElementsAndTextSize = getHeightOfElementsAndTextSizeInScope(heightOfElementsAndTextSize);
 
@@ -239,7 +268,7 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
             page.setText(textChange);
         }
 
-        if (numbersFading != 0) {
+        if (numbersFading != NUMBERS_FADING_DEFAULT) {
             currentPageListView.setFadingEdgeLength(numbersFading);
         }
     }
@@ -274,9 +303,9 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
      * @return limited animation speed
      */
     private int getAnimationSepeedInScope(Integer animationSpeed) {
-        return (animationSpeed > 280) ?
-                280 : (animationSpeed < 150) ?
-                150 : animationSpeed;
+        return (animationSpeed > ANIMATION_SPEED_MAX) ?
+                ANIMATION_SPEED_MAX : (animationSpeed < ANIMATION_SPEED_MIN) ?
+                ANIMATION_SPEED_MIN : animationSpeed;
     }
 
     /**
@@ -286,9 +315,9 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
      * @return limited height and text size
      */
     private int getHeightOfElementsAndTextSizeInScope(Integer heightOfElementsAndTextSize) {
-        return (heightOfElementsAndTextSize > 50) ?
-                50 : (heightOfElementsAndTextSize < 16) ?
-                16 : heightOfElementsAndTextSize;
+        return (heightOfElementsAndTextSize > HEIGHT_AND_TEXT_SIZE_MAX) ?
+                HEIGHT_AND_TEXT_SIZE_MAX : (heightOfElementsAndTextSize < HEIGHT_AND_TEXT_SIZE_MIN) ?
+                HEIGHT_AND_TEXT_SIZE_MIN : heightOfElementsAndTextSize;
     }
 
     /**
