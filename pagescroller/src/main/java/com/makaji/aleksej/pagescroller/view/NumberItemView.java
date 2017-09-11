@@ -21,12 +21,13 @@ public class NumberItemView extends LinearLayout {
         super(context);
     }
 
-    public void bind(Integer num){
+    public void bind(Integer num) {
         numberTv.setText(String.format(Locale.getDefault(), "%d", num));
     }
 
     /**
      * Set height of element in item list with custom attribute
+     *
      * @param heightOfElementsAndTextSize
      */
     public void setHeightOfElementsAndTextSize(Integer heightOfElementsAndTextSize) {
@@ -34,7 +35,7 @@ public class NumberItemView extends LinearLayout {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         float scaledDensity = displayMetrics.scaledDensity;
 
-        float textSize =(heightOfElementsAndTextSize/scaledDensity)- ((heightOfElementsAndTextSize/scaledDensity)/4);
+        float textSize = (heightOfElementsAndTextSize / scaledDensity) - ((heightOfElementsAndTextSize / scaledDensity) / 4);
 
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) numberTv.getLayoutParams();
         params.height = heightOfElementsAndTextSize;
@@ -48,8 +49,6 @@ public class NumberItemView extends LinearLayout {
     public void setTextColor(Integer colorCode) {
         numberTv.setTextColor(colorCode);
     }
-
-
 
 
 }

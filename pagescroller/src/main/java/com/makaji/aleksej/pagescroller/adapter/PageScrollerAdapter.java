@@ -82,5 +82,4 @@ public class PageScrollerAdapter extends BaseAdapter {
     public void setTextColor(Integer colorCode) {
         this.colorCode = colorCode;
     }
-
 }

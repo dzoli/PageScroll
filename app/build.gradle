@@ -32,10 +32,16 @@ dependencies {
     //android anotations
     apt "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
+
     //Number Picker
     compile 'com.shawnlin:number-picker:2.4.4'
+
+    // otto bus
+    compile 'com.squareup:otto:1.3.8'
+
     compile 'com.android.support:appcompat-v7:25.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
     testCompile 'junit:junit:4.12'
     compile project(':pagescroller')
 }
