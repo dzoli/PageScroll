@@ -18,11 +18,12 @@ public class RepositoryPreservingList extends RepositoryBean {
         this.listener = listener;
     }
 
-
     /**
+     * Updates the list of data that is shown in ListView. This method preserving list.
+     * All items of the list which do not have to be deleted stay in the list.
      *
-     * @param maxPage
-     * @param currentPage
+     * @param maxPage     Value of max page that is shown in ListView.
+     * @param currentPage Value of current page in ListView.
      */
     @Override
     public void updateItems(Integer maxPage, Integer currentPage) {
@@ -78,8 +79,9 @@ public class RepositoryPreservingList extends RepositoryBean {
     }
 
     /**
+     * Getter method for parent class field {@link RepositoryBean#itemList}.
      *
-     * @return
+     * @return List of data items.
      */
     @Override
     public List<Integer> getItems() {

@@ -17,7 +17,7 @@ public class RepositoryClearingList extends RepositoryBean {
      * Updates list of data that is shown in ListView. This method always clearing list
      * and then updates values again.
      *
-     * @param maxPage Value of max page that is shown in ListView.
+     * @param maxPage     Value of max page that is shown in ListView.
      * @param currentPage Value of current page in ListView.
      */
     public void updateItems(Integer maxPage, Integer currentPage) {
@@ -41,7 +41,7 @@ public class RepositoryClearingList extends RepositoryBean {
     }
 
     /**
-     * Getter
+     * Getter method for parent class field {@link RepositoryBean#itemList}.
      *
      * @return List of data items.
      */

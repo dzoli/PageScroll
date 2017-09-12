@@ -3,5 +3,5 @@
     <string name="page">page</string>
     <string name="slashText">/</string>
     <string name="maxPages">maxPages</string>
-    <string name="space" > </string>
+    <string name="space"> </string>
 </resources>

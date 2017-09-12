@@ -9,9 +9,9 @@
         android:id="@+id/numberTv"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/height_text_elements"
-        android:layout_centerInParent="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
         android:gravity="center"
         android:textSize="@dimen/text" />
 
