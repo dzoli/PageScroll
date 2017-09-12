@@ -11,6 +11,9 @@ import org.androidannotations.annotations.ViewById;
 
 import java.util.Locale;
 
+/**
+ * View which is represented as item in list view
+ */
 @EViewGroup(resName = "item_view_number")
 public class NumberItemView extends LinearLayout {
 
@@ -21,6 +24,10 @@ public class NumberItemView extends LinearLayout {
         super(context);
     }
 
+    /**
+     * Method in which binding happening for views
+     * @param num Number which will be bind for number text view
+     */
     public void bind(Integer num) {
         numberTv.setText(String.format(Locale.getDefault(), "%d", num));
     }
@@ -32,6 +39,7 @@ public class NumberItemView extends LinearLayout {
      */
     public void setHeightOfElementsAndTextSize(Integer heightOfElementsAndTextSize) {
 
+        //scaling text and height of elements based on device density
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         float scaledDensity = displayMetrics.scaledDensity;
 
@@ -42,10 +50,16 @@ public class NumberItemView extends LinearLayout {
         numberTv.setTextSize(textSize);
         numberTv.setLayoutParams(params);
 
+        //Remeasure and redraw layout
         invalidate();
         requestLayout();
     }
 
+    /**
+     * Set color for text view
+     *
+     * @param colorCode A color value in the form 0xAARRGGBB that is represent as an Integer.
+     */
     public void setTextColor(Integer colorCode) {
         numberTv.setTextColor(colorCode);
     }

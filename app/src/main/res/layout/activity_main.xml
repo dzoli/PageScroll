@@ -8,7 +8,12 @@
     <com.makaji.aleksej.pagescroller.view.PageScrollerView_
         android:id="@+id/pageScrollerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        custom:heightOfElementsAndTextSize="16"
+        custom:textChange="Page:"
+        custom:numbersFading="32"
+        custom:textColor="GRAY"
+        custom:animationSpeed="200"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
