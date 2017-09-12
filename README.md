@@ -22,7 +22,7 @@ allprojects {
 - Step 2. Add the dependency </br>
 ```
 dependencies {
-	compile 'com.github.dzoli:PageScroll:0.1.4'
+	compile 'com.github.dzoli:PageScroll:0.1.6'
 }	
 ```
 	  
@@ -52,7 +52,7 @@ Add custom view into your layout
         android:layout_height="wrap_content"
         custom:numbersFading="200"
         custom:textChange="Page:"
-        custom:animationSpeed="250"
+        custom:animationSpeed="200"
         custom:heightOfElementsAndTextSize="30"
         custom:textColor="GRAY"
         />
