@@ -8,7 +8,7 @@ import java.util.List;
 @EBean
 public abstract class RepositoryBean {
 
-    protected final List<Integer> itemList = new ArrayList<>();
+    final List<Integer> itemList = new ArrayList<>();
 
     public abstract void updateItems(Integer maxPages, Integer currPage);
 

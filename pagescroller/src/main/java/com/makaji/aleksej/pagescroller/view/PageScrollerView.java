@@ -29,10 +29,25 @@ import java.util.Locale;
 
 /**
  * This class is view group which enables scrolling pages with animation, with possibility of modifying some custom attributes.
- * Class implements listener with callback method that is responsible on changing current page. Developer can choose between two implementations.
+ * Class implements listener with callback method that is responsible for changing current page. Developer can choose between two implementations.
  */
 @EViewGroup(resName = "page_counter")
 public class PageScrollerView extends LinearLayout implements OnPageChangedListener {
+
+    private static final int ANIMATION_SPEED_MAX = 280;
+    private static final int ANIMATION_SPEED_MIN = 150;
+    private static final int ANIMATION_SPEED_DEFAULT = 200;
+    private static final int NUMBERS_FADING_DEFAULT = 0;
+    private static final int HEIGHT_AND_TEXT_SIZE_DEFAULT = 0;
+    private static final int HEIGHT_AND_TEXT_SIZE_MAX = 50;
+    private static final int HEIGHT_AND_TEXT_SIZE_MIN = 16;
+    private final String textColor;
+    private final String textChange;
+    private final Integer heightOfElementsAndTextSize;
+    private final Integer numbersFading;
+    private Integer currentPage = 0;
+    private Integer animationSpeed;
+    private Float textSize;
 
     @ViewById
     ListView currentPageListView;
@@ -51,26 +66,11 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
     @ViewById
     TextView slash;
 
-    private Integer currentPage = 0;
-    private final String textColor;
-    private final String textChange;
-    private final Integer heightOfElementsAndTextSize;
-    private final Integer numbersFading;
-    private Integer animationSpeed;
-    public static final int ANIMATION_SPEED_MAX = 280;
-    public static final int ANIMATION_SPEED_MIN = 150;
-    public static final int ANIMATION_SPEED_DEFAULT = 200;
-    public static final int NUMBERS_FADING_DEFAULT = 0;
-    public static final int HEIGHT_AND_TEXT_SIZE_DEFAULT = 0;
-    public static final int HEIGHT_AND_TEXT_SIZE_MAX = 50;
-    public static final int HEIGHT_AND_TEXT_SIZE_MIN = 16;
-    private Float textSize;
-
     /**
      * Constructor in which we get custom attributes from xml
      *
      * @param context Context of a View.
-     * @param attrs A collection of attributes, as found associated with a tag in an XML document of a View.
+     * @param attrs   A collection of attributes, as found associated with a tag in an XML document of a View.
      */
     public PageScrollerView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -90,10 +90,8 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
         }
     }
 
-
     /**
      * Method which is called after the views binding has happened
-     *
      */
     @AfterViews
     public void init() {
@@ -229,12 +227,12 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
     /**
      * Check if custom attribute is set and apply his value if set
      *
-     * @param footerAndHeaderView Footer and Header elements of a ListView.
+     * @param footerAndHeaderView         Footer and Header elements of a ListView.
      * @param heightOfElementsAndTextSize Height of View and text size of elements on a Custom View.
-     * @param textColor String representation of a text color of View elements.
-     * @param textChange String value of TextView page element.
-     * @param numbersFading Number of fading pixels.
-     * @param animationSpeed Number of animation speed when scrolling items in ListView expressed in milliseconds.
+     * @param textColor                   String representation of a text color of View elements.
+     * @param textChange                  String value of TextView page element.
+     * @param numbersFading               Number of fading pixels.
+     * @param animationSpeed              Number of animation speed when scrolling items in ListView expressed in milliseconds.
      */
     private void checkCustomAttributesAndSetValues(View footerAndHeaderView, Integer heightOfElementsAndTextSize, String textColor, String textChange,
                                                    Integer numbersFading, Integer animationSpeed) {
@@ -257,7 +255,7 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
             footerAndHeaderView.setLayoutParams(new ListView.LayoutParams(LayoutParams.MATCH_PARENT, heightOfElementsAndTextSize));
         }
 
-        this.animationSpeed = getAnimationSepeedInScope(animationSpeed);
+        this.animationSpeed = getAnimationSpeedInScope(animationSpeed);
 
         if (textColor != null) {
             setTextColor(Color.parseColor(textColor));
@@ -301,7 +299,7 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
      * @param animationSpeed Number of animation speed when scrolling items in ListView expressed in milliseconds.
      * @return Limited animation speed (scope is from 150 to 280).
      */
-    private int getAnimationSepeedInScope(Integer animationSpeed) {
+    private int getAnimationSpeedInScope(Integer animationSpeed) {
         return (animationSpeed > ANIMATION_SPEED_MAX) ?
                 ANIMATION_SPEED_MAX : (animationSpeed < ANIMATION_SPEED_MIN) ?
                 ANIMATION_SPEED_MIN : animationSpeed;
@@ -310,7 +308,7 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
     /**
      * Limits for custom height and text size attribute.
      *
-     * @param heightOfElementsAndTextSize  Height of View and text size of elements on a Custom View.
+     * @param heightOfElementsAndTextSize Height of View and text size of elements on a Custom View.
      * @return Limited height and text size (scope is from 16 to 50)
      */
     private int getHeightOfElementsAndTextSizeInScope(Integer heightOfElementsAndTextSize) {

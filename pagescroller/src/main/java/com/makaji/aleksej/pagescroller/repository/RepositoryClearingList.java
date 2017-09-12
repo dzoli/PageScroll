@@ -6,7 +6,7 @@ import java.util.List;
 
 public class RepositoryClearingList extends RepositoryBean {
 
-    private OnPageChangedListener listener;
+    private final OnPageChangedListener listener;
 
     public RepositoryClearingList(OnPageChangedListener listener) {
         super();

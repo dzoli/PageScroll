@@ -10,11 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        custom:animationSpeed="250"
-        custom:heightOfElementsAndTextSize="30"
-        custom:numbersFading="200"
-        custom:textChange="Page:"
-        custom:textColor="GRAY" />
+         />
 
     <RelativeLayout
         android:layout_width="match_parent"
