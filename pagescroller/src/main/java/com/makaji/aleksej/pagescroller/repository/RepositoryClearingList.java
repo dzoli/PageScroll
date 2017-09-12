@@ -4,10 +4,19 @@ import com.makaji.aleksej.pagescroller.listener.OnPageChangedListener;
 
 import java.util.List;
 
+/**
+ * This is implementation class that is responsible for manipulating whit items of list.
+ * This class always clear list before manipulation.
+ */
 public class RepositoryClearingList extends RepositoryBean {
 
     private final OnPageChangedListener listener;
 
+    /**
+     * This constructor stores listener for changing page.
+     *
+     * @param listener Listener with callback method.
+     */
     public RepositoryClearingList(OnPageChangedListener listener) {
         super();
         this.listener = listener;

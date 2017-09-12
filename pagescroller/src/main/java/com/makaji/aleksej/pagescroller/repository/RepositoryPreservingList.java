@@ -5,7 +5,8 @@ import com.makaji.aleksej.pagescroller.listener.OnPageChangedListener;
 import java.util.List;
 
 /**
- *
+ * This is implementation class that is responsible for manipulating whit items of list.
+ * This class preserving list with items.
  */
 public class RepositoryPreservingList extends RepositoryBean {
 
@@ -13,6 +14,11 @@ public class RepositoryPreservingList extends RepositoryBean {
 
     private Integer maxPageBefore = 0;
 
+    /**
+     * This constructor stores listener for changing page.
+     *
+     * @param listener Listener with callback method.
+     */
     public RepositoryPreservingList(OnPageChangedListener listener) {
         super();
         this.listener = listener;
