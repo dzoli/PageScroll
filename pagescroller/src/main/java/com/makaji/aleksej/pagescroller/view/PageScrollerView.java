@@ -41,13 +41,15 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
     private static final int HEIGHT_AND_TEXT_SIZE_DEFAULT = 0;
     private static final int HEIGHT_AND_TEXT_SIZE_MAX = 50;
     private static final int HEIGHT_AND_TEXT_SIZE_MIN = 16;
+    private Integer currentPage = 0;
     private final String textColor;
     private final String textChange;
     private final Integer heightOfElementsAndTextSize;
     private final Integer numbersFading;
-    private Integer currentPage = 0;
     private Integer animationSpeed;
     private Float textSize;
+
+    private final RepositoryBean repositoryBean = new RepositoryClearingList(this);
 
     @ViewById
     ListView currentPageListView;
@@ -58,7 +60,6 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
     @Bean
     PageScrollerAdapter pageScrollerAdapter;
 
-    private final RepositoryBean repositoryBean = new RepositoryClearingList(this);
 
     @ViewById
     TextView page;
