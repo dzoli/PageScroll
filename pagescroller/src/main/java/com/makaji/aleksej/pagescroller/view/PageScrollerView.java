@@ -363,7 +363,10 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
      * @return Number of digits for character place.
      */
     private int getNumberOfDigits(Integer currPage) {
-        return (int) (Math.floor(Math.log10(Math.abs(currPage))) + 1);
+        Integer absoluteCurrentPage = Math.abs(currentPage);
+
+        // do logarithm to get number of characters and round the digit
+        return (int) (Math.floor(Math.log10(absoluteCurrentPage)) + 1);
     }
 
     /**

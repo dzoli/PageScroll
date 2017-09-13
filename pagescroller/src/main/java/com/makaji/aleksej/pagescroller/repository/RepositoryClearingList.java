@@ -12,6 +12,12 @@ public class RepositoryClearingList extends RepositoryBean {
 
     private final OnPageChangedListener listener;
 
+    private final Integer INVISIBLE_ELEMENT = -1;
+
+    private final Integer FIRST_ELEMENT = 1;
+
+    private final Integer SECOND_ELEMENT = 2;
+
     /**
      * This constructor stores listener for changing page.
      *
@@ -30,21 +36,28 @@ public class RepositoryClearingList extends RepositoryBean {
      * @param currentPage Value of current page in ListView.
      */
     public void updateItems(Integer maxPage, Integer currentPage) {
+        // always clear before modifications
         itemList.clear();
-        if (maxPage == 2) {
-            for (int i = 1; i <= 2; i++) {
+
+        // special case when invisible element is added
+        if (maxPage == SECOND_ELEMENT) {
+            for (int i = 1; i <= SECOND_ELEMENT; i++) {
                 itemList.add(i);
             }
-            itemList.add(-1);
+            itemList.add(INVISIBLE_ELEMENT);   // add invisible element to list
+
+            // check if delete is occurred
             if (currentPage > maxPage) {
-                listener.pageChanged(2);
+                listener.pageChanged(SECOND_ELEMENT);
             }
         } else {
             for (int i = 1; i <= maxPage; i++) {
                 itemList.add(i);
             }
-            if (maxPage == 1) {
-                listener.pageChanged(1);
+
+            // always explicitly set first element because of invisible element in the list
+            if (maxPage == FIRST_ELEMENT) {
+                listener.pageChanged(FIRST_ELEMENT);
             }
         }
     }

@@ -14,6 +14,14 @@ public class RepositoryPreservingList extends RepositoryBean {
 
     private Integer maxPageBefore = 0;
 
+    private final Integer INVISIBLE_ELEMENT = -1;
+
+    private final Integer ZERO_ELEMENT = 0;
+
+    private final Integer FIRST_ELEMENT = 1;
+
+    private final Integer SECOND_ELEMENT = 2;
+
     /**
      * This constructor stores listener for changing page.
      *
@@ -34,8 +42,8 @@ public class RepositoryPreservingList extends RepositoryBean {
     @Override
     public void updateItems(Integer maxPage, Integer currentPage) {
         //if list consisted 2 items before, we remove 1 element which we added before, to fix scrolling bug
-        if (maxPageBefore == 2) {
-            itemList.remove(2);
+        if (maxPageBefore == SECOND_ELEMENT) {
+            itemList.remove(SECOND_ELEMENT);
             maxPageBefore = maxPage;
         }
 
@@ -47,10 +55,10 @@ public class RepositoryPreservingList extends RepositoryBean {
             }
 
             //If nothing is selected, show 0 pages
-        } else if (maxPage == 0) {
+        } else if (maxPage == ZERO_ELEMENT) {
             itemList.clear();
-            itemList.add(0);
-            listener.pageChanged(0);
+            itemList.add(ZERO_ELEMENT);
+            listener.pageChanged(ZERO_ELEMENT);
 
             //Adding to list
         } else if (maxPage > itemList.size()) {
@@ -70,18 +78,17 @@ public class RepositoryPreservingList extends RepositoryBean {
         }
 
         //if list consist 2 elements, add one more element to fix scrolling bug (later we remove it)
-        if (maxPage == 2) {
-            itemList.add(-1);
-            maxPageBefore = 2;
-            if (currentPage > 2) {
-                listener.pageChanged(2);
+        if (maxPage == SECOND_ELEMENT) {
+            itemList.add(INVISIBLE_ELEMENT);
+            maxPageBefore = SECOND_ELEMENT;
+            if (currentPage > SECOND_ELEMENT) {
+                listener.pageChanged(SECOND_ELEMENT);
             }
         }
 
-        if (maxPage == 1) {
-            listener.pageChanged(1);
+        if (maxPage == FIRST_ELEMENT) {
+            listener.pageChanged(FIRST_ELEMENT);
         }
-
     }
 
     /**
