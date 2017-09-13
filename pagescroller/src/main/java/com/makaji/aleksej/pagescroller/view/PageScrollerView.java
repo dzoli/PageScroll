@@ -35,23 +35,55 @@ import java.util.Locale;
 public class PageScrollerView extends LinearLayout implements OnPageChangedListener {
 
     private static final int ANIMATION_SPEED_MAX = 280;
+
     private static final int ANIMATION_SPEED_MIN = 150;
+
     private static final int ANIMATION_SPEED_DEFAULT = 200;
+
     private static final int NUMBERS_FADING_DEFAULT = 0;
+
     private static final int HEIGHT_AND_TEXT_SIZE_DEFAULT = 0;
+
     private static final int HEIGHT_AND_TEXT_SIZE_MAX = 50;
+
     private static final int HEIGHT_AND_TEXT_SIZE_MIN = 16;
 
+    /**
+     * String representation of a text color of View elements.
+     */
     private final String textColor;
-    private final String textChange;
-    private final Integer heightOfElementsAndTextSize;
-    private final Integer numbersFading;
-    private Integer animationSpeed;
-    private Float textSize;
 
+    /**
+     * String value of TextView page element.
+     */
+    private final String textChange;
+
+    /**
+     * Height of View and text size of elements on a Custom View.
+     */
+    private final Integer heightOfElementsAndTextSize;
+
+    /**
+     * Number of fading pixels.
+     */
+    private final Integer numbersFading;
+
+    private final RepositoryBean repository = new RepositoryClearingList(this);
+
+    /**
+     * Current page which will be showed
+     */
     private Integer currentPage = 0;
 
-    private final RepositoryBean repositoryBean = new RepositoryClearingList(this);
+    /**
+     * Number of animation speed when scrolling items in ListView expressed in milliseconds.
+     */
+    private Integer animationSpeed;
+
+    /**
+     * Size of text which is scaled by height of elements
+     */
+    private Float textSize;
 
     @ViewById
     ListView currentPageListView;
@@ -61,7 +93,6 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
 
     @Bean
     PageScrollerAdapter pageScrollerAdapter;
-
 
     @ViewById
     TextView page;
@@ -78,11 +109,12 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
     public PageScrollerView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        TypedArray a = context.getTheme().obtainStyledAttributes(
+        final TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
                 R.styleable.PageScrollerView,
                 0, 0);
         try {
+            //Get custom attributes from xml, if attribute is not set, put default value
             textColor = a.getString(R.styleable.PageScrollerView_textColor);
             heightOfElementsAndTextSize = a.getInteger(R.styleable.PageScrollerView_heightOfElementsAndTextSize, HEIGHT_AND_TEXT_SIZE_DEFAULT);
             textChange = a.getString(R.styleable.PageScrollerView_textChange);
@@ -114,7 +146,7 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
         currentPageListView.setEnabled(false);
 
         //Setting data for adapter
-        pageScrollerAdapter.setPagesNumber(repositoryBean.getItems());
+        pageScrollerAdapter.setPagesNumber(repository.getItems());
 
         //Setting adapter for ListView
         currentPageListView.setAdapter(pageScrollerAdapter);
@@ -123,7 +155,7 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
     /**
      * Set max pages
      * Passed param is number of max pages, on which is also calculated width of list view.
-     * Method call also repositoryBean which have two implementations
+     * Method call also repository which have two implementations
      *
      * @param maxPage Containing the max number of elements in ListView.
      */
@@ -131,10 +163,10 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
 
         setWidthOfListBasedOnDigits(maxPage);
 
-        repositoryBean.updateItems(maxPage, currentPage);
+        repository.updateItems(maxPage, currentPage);
 
         //Refresh items in adapter
-        pageScrollerAdapter.setPagesNumber(repositoryBean.getItems());
+        pageScrollerAdapter.setPagesNumber(repository.getItems());
 
         maxPages.setText(String.format(Locale.getDefault(), "%d", maxPage));
     }
@@ -144,24 +176,27 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
      * Calculates which item in list to show based on list view height and one of elements height.
      * As well, calculating width of list based on number of digits which are set as list elements.
      *
-     * @param currPage Containing value of new current page in ListView.
+     * @param currentPage Containing value of new current page in ListView.
      */
-    public void setCurrentPage(Integer currPage) {
-        int h1 = currentPageListView.getHeight();
-        int h2 = maxPages.getHeight();
-        currentPage = currPage;
+    public void setCurrentPage(Integer currentPage) {
 
-        int nDigits = getNumberOfDigits(currPage);
+        int h1 = currentPageListView.getHeight();
+
+        int h2 = maxPages.getHeight();
+
+        this.currentPage = currentPage;
+
+        int digitsOfCurrentPage = getNumberOfDigits(currentPage);
 
         int widthOfOneChar = getWidthOfCharacter(slash);
 
         //set width of list
         LayoutParams paramsList = (LayoutParams) currentPageListView.getLayoutParams();
-        paramsList.width = (widthOfOneChar + (widthOfOneChar / 5) + widthOfOneChar / 3) * (nDigits + 1);
+        paramsList.width = calculateWidthOfList(widthOfOneChar, digitsOfCurrentPage);
         currentPageListView.setLayoutParams(paramsList);
 
         //Scroll to requested item with animation
-        currentPageListView.smoothScrollToPositionFromTop(currPage, h1 / 2 - h2 / 2, animationSpeed);
+        currentPageListView.smoothScrollToPositionFromTop(currentPage, h1 / 2 - h2 / 2, animationSpeed);
     }
 
 
@@ -284,14 +319,15 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
 
         LayoutParams paramsList = (LayoutParams) currentPageListView.getLayoutParams();
         if (currentPage > maxPage) {
-            int nDigitsMax = getNumberOfDigits(maxPage);
-            paramsList.width = (widthOfOneChar + (widthOfOneChar / 5) + widthOfOneChar / 3) * (nDigitsMax + 1);
+            int digitsOfMaxPages = getNumberOfDigits(maxPage);
+            paramsList.width = calculateWidthOfList(widthOfOneChar, digitsOfMaxPages);
         } else if (currentPage == 0) {
-            paramsList.width = (widthOfOneChar + (widthOfOneChar / 5) + widthOfOneChar / 3) * (1 + 1);
+            //Passing one number digit because list will be showing number 1
+            paramsList.width = calculateWidthOfList(widthOfOneChar, 1);
             currentPage = 1;
         } else {
-            int nDigitsCurrentPage = getNumberOfDigits(currentPage);
-            paramsList.width = (widthOfOneChar + (widthOfOneChar / 5) + widthOfOneChar / 3) * (nDigitsCurrentPage + 1);
+            int digitsOfCurrentPage = getNumberOfDigits(currentPage);
+            paramsList.width = calculateWidthOfList(widthOfOneChar, digitsOfCurrentPage);
         }
         currentPageListView.setLayoutParams(paramsList);
     }
@@ -338,5 +374,18 @@ public class PageScrollerView extends LinearLayout implements OnPageChangedListe
     @Override
     public void pageChanged(Integer newPageValue) {
         setCurrentPage(newPageValue);
+    }
+
+    /**
+     * Calculation for list width based on char length and number of digits is used.
+     *
+     * @param widthOfOneChar Length of character
+     * @param digits         Number of digits
+     * @return Width of list
+     */
+    private int calculateWidthOfList(Integer widthOfOneChar, Integer digits) {
+        /*equation, we use +1 at the end because when we scroll to last page with 1 digit, next page with 2 digits won't be showed.
+        Dividing with 5 and 3 is to get best optimized width*/
+        return (widthOfOneChar + (widthOfOneChar / 5) + widthOfOneChar / 3) * (digits + 1);
     }
 }
